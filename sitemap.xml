@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet type="text/xsl" href="/sitemap.xsl"?>
 <urlset
     xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -14,16 +13,15 @@
         http://www.google.com/schemas/sitemap-video/1.1
         http://www.google.com/schemas/sitemap-video/1.1/sitemap-video.xsd">
 
-    <!-- ═══════════════════════════════════════════════════════════
-         BGIABT — Bridging Global Innovation & Bangladeshi Talent
-         Domain  : https://web3blockchain.pro.bd
-         Generated: 2026-05-30
-         ═══════════════════════════════════════════════════════════ -->
+    <!--
+        BGIABT sitemap.xml — fixed 2026-05-30
+        Rule:  <loc>           = HTML page hosting the player
+               <content_loc>  = raw .mp4 bytes (must differ from loc)
+        The previous version had both pointing to intro.mp4 — corrected below.
+    -->
 
 
-    <!-- ──────────────────────────────────────────
-         HOMEPAGE  (highest priority — root entry)
-    ────────────────────────────────────────── -->
+    <!-- HOMEPAGE — contains video player, loc != content_loc -->
     <url>
         <loc>https://web3blockchain.pro.bd/</loc>
         <lastmod>2026-05-30</lastmod>
@@ -31,42 +29,60 @@
         <priority>1.0</priority>
         <image:image>
             <image:loc>https://web3blockchain.pro.bd/logo.png</image:loc>
-            <image:title>BGIABT — Bridging Global Innovation &amp; Bangladeshi Talent</image:title>
-            <image:caption>Official BGIABT Protocol logo</image:caption>
+            <image:title>BGIABT Official Logo</image:title>
+            <image:caption>Brand logo for BGIABT — Bridging Global Innovation and Bangladeshi Talent</image:caption>
         </image:image>
         <image:image>
             <image:loc>https://web3blockchain.pro.bd/sponsor1.png</image:loc>
-            <image:title>Global Innovation Sponsor 1</image:title>
-            <image:caption>Partner and sponsor of BGIABT Protocol</image:caption>
+            <image:title>BGIABT Global Sponsor 1</image:title>
+            <image:caption>Sponsoring partner of BGIABT Protocol</image:caption>
         </image:image>
         <image:image>
             <image:loc>https://web3blockchain.pro.bd/sponsor2.png</image:loc>
-            <image:title>Global Innovation Sponsor 2</image:title>
-            <image:caption>Partner and sponsor of BGIABT Protocol</image:caption>
+            <image:title>BGIABT Global Sponsor 2</image:title>
+            <image:caption>Sponsoring partner of BGIABT Protocol</image:caption>
         </image:image>
         <image:image>
             <image:loc>https://web3blockchain.pro.bd/sponsor3.png</image:loc>
-            <image:title>Global Innovation Sponsor 3</image:title>
-            <image:caption>Partner and sponsor of BGIABT Protocol</image:caption>
+            <image:title>BGIABT Global Sponsor 3</image:title>
+            <image:caption>Sponsoring partner of BGIABT Protocol</image:caption>
         </image:image>
+        <!--
+            loc     = https://web3blockchain.pro.bd/          (HTML page with embedded player)
+            content_loc = https://web3blockchain.pro.bd/intro.mp4  (raw video file — DIFFERENT)
+        -->
         <video:video>
             <video:thumbnail_loc>https://web3blockchain.pro.bd/assets/intro-thumbnail.jpg</video:thumbnail_loc>
             <video:title>BGIABT Protocol — Introduction Video</video:title>
-            <video:description>An overview of the BGIABT global innovation event, the submission process, and how Bangladeshi talent can scale their ideas internationally.</video:description>
+            <video:description>An overview of the BGIABT global innovation event, the abstract submission process, and how Bangladeshi engineers can scale ideas internationally through the BGIABT compilation pipeline.</video:description>
             <video:content_loc>https://web3blockchain.pro.bd/intro.mp4</video:content_loc>
             <video:duration>120</video:duration>
             <video:publication_date>2026-05-30T00:00:00+06:00</video:publication_date>
             <video:family_friendly>yes</video:family_friendly>
+            <video:category>Technology</video:category>
+            <video:tag>blockchain</video:tag>
+            <video:tag>innovation</video:tag>
+            <video:tag>bangladesh</video:tag>
+            <video:tag>web3</video:tag>
+            <video:tag>developer</video:tag>
+            <video:tag>protocol</video:tag>
             <video:live>no</video:live>
         </video:video>
         <mobile:mobile/>
     </url>
 
 
-    <!-- ──────────────────────────────────────────
-         SECTION — Incentives / Perks
-         Anchor : /#perks
-    ────────────────────────────────────────── -->
+    <!-- SECTION — Submit Abstract (highest CTA priority) -->
+    <url>
+        <loc>https://web3blockchain.pro.bd/#submit</loc>
+        <lastmod>2026-05-30</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.95</priority>
+        <mobile:mobile/>
+    </url>
+
+
+    <!-- SECTION — Incentives / Perks -->
     <url>
         <loc>https://web3blockchain.pro.bd/#perks</loc>
         <lastmod>2026-05-30</lastmod>
@@ -76,10 +92,7 @@
     </url>
 
 
-    <!-- ──────────────────────────────────────────
-         SECTION — Inspiration / Ecosystem Vectors
-         Anchor : /#inspiration
-    ────────────────────────────────────────── -->
+    <!-- SECTION — Inspiration / Ecosystem Vectors -->
     <url>
         <loc>https://web3blockchain.pro.bd/#inspiration</loc>
         <lastmod>2026-05-30</lastmod>
@@ -89,10 +102,7 @@
     </url>
 
 
-    <!-- ──────────────────────────────────────────
-         SECTION — Showcase / Event Assets
-         Anchor : /#showcase
-    ────────────────────────────────────────── -->
+    <!-- SECTION — Showcase / Event Assets -->
     <url>
         <loc>https://web3blockchain.pro.bd/#showcase</loc>
         <lastmod>2026-05-30</lastmod>
@@ -106,12 +116,12 @@
         <image:image>
             <image:loc>https://web3blockchain.pro.bd/assets/id.png</image:loc>
             <image:title>BGIABT ID Matrix Card</image:title>
-            <image:caption>Secure identification matrix issued to registered participants</image:caption>
+            <image:caption>Secure identification matrix issued to registered BGIABT participants</image:caption>
         </image:image>
         <image:image>
             <image:loc>https://web3blockchain.pro.bd/assets/certificate.png</image:loc>
             <image:title>BGIABT Protocol Credential Certificate</image:title>
-            <image:caption>Official credential certificate awarded to selected innovators</image:caption>
+            <image:caption>Official credential certificate awarded to selected innovators in the BGIABT pipeline</image:caption>
         </image:image>
         <image:image>
             <image:loc>https://web3blockchain.pro.bd/assets/tshirt.png</image:loc>
@@ -122,22 +132,7 @@
     </url>
 
 
-    <!-- ──────────────────────────────────────────
-         SECTION — Submit Abstract / Application Form
-         Anchor : /#submit
-    ────────────────────────────────────────── -->
-    <url>
-        <loc>https://web3blockchain.pro.bd/#submit</loc>
-        <lastmod>2026-05-30</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.95</priority>
-        <mobile:mobile/>
-    </url>
-
-
-    <!-- ──────────────────────────────────────────
-         STATIC ASSETS — Logo & Brand
-    ────────────────────────────────────────── -->
+    <!-- STATIC — Logo -->
     <url>
         <loc>https://web3blockchain.pro.bd/logo.png</loc>
         <lastmod>2026-05-30</lastmod>
@@ -146,14 +141,12 @@
         <image:image>
             <image:loc>https://web3blockchain.pro.bd/logo.png</image:loc>
             <image:title>BGIABT Official Logo</image:title>
-            <image:caption>Brand logo for BGIABT — Bridging Global Innovation &amp; Bangladeshi Talent Protocol</image:caption>
+            <image:caption>Brand logo for BGIABT Protocol</image:caption>
         </image:image>
     </url>
 
 
-    <!-- ──────────────────────────────────────────
-         STATIC ASSETS — Event Asset Images
-    ────────────────────────────────────────── -->
+    <!-- STATIC — Event Asset Images -->
     <url>
         <loc>https://web3blockchain.pro.bd/assets/gatepass.png</loc>
         <lastmod>2026-05-30</lastmod>
@@ -162,7 +155,7 @@
         <image:image>
             <image:loc>https://web3blockchain.pro.bd/assets/gatepass.png</image:loc>
             <image:title>BGIABT Gate Pass — Event Entry</image:title>
-            <image:caption>Physical gate pass asset distributed to verified innovators at the BGIABT global event</image:caption>
+            <image:caption>Physical gate pass distributed to verified innovators at the BGIABT global event</image:caption>
         </image:image>
     </url>
 
@@ -186,7 +179,7 @@
         <image:image>
             <image:loc>https://web3blockchain.pro.bd/assets/certificate.png</image:loc>
             <image:title>BGIABT Credential Certificate</image:title>
-            <image:caption>Official credential certificate awarded to developers selected in the BGIABT compilation pipeline</image:caption>
+            <image:caption>Official credential certificate for developers selected in the BGIABT compilation pipeline</image:caption>
         </image:image>
     </url>
 
@@ -198,14 +191,12 @@
         <image:image>
             <image:loc>https://web3blockchain.pro.bd/assets/tshirt.png</image:loc>
             <image:title>BGIABT Protocol Apparel — Developer T-Shirt</image:title>
-            <image:caption>Exclusive protocol-branded apparel provided to innovators during the BGIABT presentation loop</image:caption>
+            <image:caption>Exclusive protocol-branded apparel provided to innovators at BGIABT events</image:caption>
         </image:image>
     </url>
 
 
-    <!-- ──────────────────────────────────────────
-         STATIC ASSETS — Sponsor Logos
-    ────────────────────────────────────────── -->
+    <!-- STATIC — Sponsor Logos -->
     <url>
         <loc>https://web3blockchain.pro.bd/sponsor1.png</loc>
         <lastmod>2026-05-30</lastmod>
@@ -240,34 +231,6 @@
             <image:title>BGIABT Global Sponsor 3</image:title>
             <image:caption>Sponsoring partner supporting the BGIABT global innovation protocol</image:caption>
         </image:image>
-    </url>
-
-
-    <!-- ──────────────────────────────────────────
-         MEDIA — Intro Video
-    ────────────────────────────────────────── -->
-    <url>
-        <loc>https://web3blockchain.pro.bd/intro.mp4</loc>
-        <lastmod>2026-05-30</lastmod>
-        <changefreq>yearly</changefreq>
-        <priority>0.5</priority>
-        <video:video>
-            <video:thumbnail_loc>https://web3blockchain.pro.bd/assets/intro-thumbnail.jpg</video:thumbnail_loc>
-            <video:title>BGIABT Protocol Introduction — Bridging Global Innovation &amp; Bangladeshi Talent</video:title>
-            <video:description>Watch the official BGIABT intro video to learn about the global innovation event, how to submit your abstract, what incentives are available, and how Bangladeshi engineers can scale their ideas into international ecosystems.</video:description>
-            <video:content_loc>https://web3blockchain.pro.bd/intro.mp4</video:content_loc>
-            <video:duration>120</video:duration>
-            <video:publication_date>2026-05-30T00:00:00+06:00</video:publication_date>
-            <video:family_friendly>yes</video:family_friendly>
-            <video:category>Technology</video:category>
-            <video:tag>blockchain</video:tag>
-            <video:tag>innovation</video:tag>
-            <video:tag>bangladesh</video:tag>
-            <video:tag>web3</video:tag>
-            <video:tag>developer</video:tag>
-            <video:tag>protocol</video:tag>
-            <video:live>no</video:live>
-        </video:video>
     </url>
 
 </urlset>
