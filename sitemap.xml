@@ -28,17 +28,17 @@
         <changefreq>weekly</changefreq>
         <priority>1.0</priority>
         <image:image>
-            <image:loc>https://web3blockchain.pro.bd/logo.png</image:loc>
+            <image:loc>https://web3blockchain.pro.bd/assets/logo.png</image:loc>
             <image:title>BGIABT Official Logo</image:title>
             <image:caption>Brand logo for BGIABT — Bridging Global Innovation and Bangladeshi Talent</image:caption>
         </image:image>
         <image:image>
-            <image:loc>https://web3blockchain.pro.bd/sponsor1.png</image:loc>
+            <image:loc>https://web3blockchain.pro.bd/assets/sponsor1.png</image:loc>
             <image:title>BGIABT Global Sponsor 1</image:title>
             <image:caption>Sponsoring partner of BGIABT Protocol</image:caption>
         </image:image>
         <image:image>
-            <image:loc>https://web3blockchain.pro.bd/sponsor2.png</image:loc>
+            <image:loc>https://web3blockchain.pro.bd/assets/sponsor2.png</image:loc>
             <image:title>BGIABT Global Sponsor 2</image:title>
             <image:caption>Sponsoring partner of BGIABT Protocol</image:caption>
         </image:image>
@@ -109,22 +109,22 @@
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
         <image:image>
-            <image:loc>https://web3blockchain.pro.bd/assets/gatepass.png</image:loc>
+            <image:loc>https://web3blockchain.pro.bd/assets/assets/gatepass.png</image:loc>
             <image:title>BGIABT Event Gate Pass</image:title>
             <image:caption>Official gate pass issued to authorized innovators at the BGIABT presentation loop</image:caption>
         </image:image>
         <image:image>
-            <image:loc>https://web3blockchain.pro.bd/assets/id.png</image:loc>
+            <image:loc>https://web3blockchain.pro.bd/assets/assets/id.png</image:loc>
             <image:title>BGIABT ID Matrix Card</image:title>
             <image:caption>Secure identification matrix issued to registered BGIABT participants</image:caption>
         </image:image>
         <image:image>
-            <image:loc>https://web3blockchain.pro.bd/assets/certificate.png</image:loc>
+            <image:loc>https://web3blockchain.pro.bd/assets/assets/certificate.png</image:loc>
             <image:title>BGIABT Protocol Credential Certificate</image:title>
             <image:caption>Official credential certificate awarded to selected innovators in the BGIABT pipeline</image:caption>
         </image:image>
         <image:image>
-            <image:loc>https://web3blockchain.pro.bd/assets/tshirt.png</image:loc>
+            <image:loc>https://web3blockchain.pro.bd/assets/assets/tshirt.png</image:loc>
             <image:title>BGIABT Protocol Apparel</image:title>
             <image:caption>Exclusive protocol apparel provided to developers in the BGIABT innovation loop</image:caption>
         </image:image>
@@ -134,12 +134,12 @@
 
     <!-- STATIC — Logo -->
     <url>
-        <loc>https://web3blockchain.pro.bd/logo.png</loc>
+        <loc>https://web3blockchain.pro.bd/assets/logo.png</loc>
         <lastmod>2026-05-30</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.3</priority>
         <image:image>
-            <image:loc>https://web3blockchain.pro.bd/logo.png</image:loc>
+            <image:loc>https://web3blockchain.pro.bd/assets/logo.png</image:loc>
             <image:title>BGIABT Official Logo</image:title>
             <image:caption>Brand logo for BGIABT Protocol</image:caption>
         </image:image>
@@ -148,7 +148,7 @@
 
     <!-- STATIC — Event Asset Images -->
     <url>
-        <loc>https://web3blockchain.pro.bd/assets/gatepass.png</loc>
+        <loc>https://web3blockchain.pro.bd/assets/assets/gatepass.png</loc>
         <lastmod>2026-05-30</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.4</priority>
@@ -198,24 +198,24 @@
 
     <!-- STATIC — Sponsor Logos -->
     <url>
-        <loc>https://web3blockchain.pro.bd/sponsor1.png</loc>
+        <loc>https://web3blockchain.pro.bd/assets/sponsor1.png</loc>
         <lastmod>2026-05-30</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.3</priority>
         <image:image>
-            <image:loc>https://web3blockchain.pro.bd/sponsor1.png</image:loc>
+            <image:loc>https://web3blockchain.pro.bd/assets/sponsor1.png</image:loc>
             <image:title>BGIABT Global Sponsor 1</image:title>
             <image:caption>Sponsoring partner supporting the BGIABT global innovation protocol</image:caption>
         </image:image>
     </url>
 
     <url>
-        <loc>https://web3blockchain.pro.bd/sponsor2.png</loc>
+        <loc>https://web3blockchain.pro.bd/assets/sponsor2.png</loc>
         <lastmod>2026-05-30</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.3</priority>
         <image:image>
-            <image:loc>https://web3blockchain.pro.bd/sponsor2.png</image:loc>
+            <image:loc>https://web3blockchain.pro.bd/assets/sponsor2.png</image:loc>
             <image:title>BGIABT Global Sponsor 2</image:title>
             <image:caption>Sponsoring partner supporting the BGIABT global innovation protocol</image:caption>
         </image:image>
