@@ -4,755 +4,540 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BGIABT // Bridging Global Innovation & Bangladeshi Talent</title>
-    <link rel="icon" type="image/png" href="logo.png">
+    <link rel="icon" type="image/png" href="assets/logo.png">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
     <style>
-        :root {
-            --bg-color: #F5F5F7;
-            --text-main: #1D1D1F;
-            --text-muted: #86868B;
-            --accent-blue: #0066CC;
-            --glass-bg: rgba(255, 255, 255, 0.65);
-            --glass-border: rgba(255, 255, 255, 0.4);
-        }
-
-        * { cursor: none !important; }
-
-        body {
-            font-family: 'Space Grotesk', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            overflow-x: hidden;
-        }
-
-        /* ── Custom Cursor ── */
-        .cursor-dot {
-            width: 7px; height: 7px;
-            background: var(--accent-blue);
-            border-radius: 50%;
-            position: fixed; top: 0; left: 0;
-            pointer-events: none; z-index: 9999;
-            transform: translate(-50%, -50%);
-        }
-        .cursor-ring {
-            width: 34px; height: 34px;
-            border: 1.5px solid rgba(0,102,204,0.35);
-            border-radius: 50%;
-            position: fixed; top: 0; left: 0;
-            pointer-events: none; z-index: 9998;
-            transform: translate(-50%, -50%);
-            transition: width 0.25s ease, height 0.25s ease, background 0.25s ease, border-color 0.25s ease;
-        }
-        .cursor-ring.hovering {
-            width: 52px; height: 52px;
-            background: rgba(0,102,204,0.07);
-            border-color: rgba(0,102,204,0.25);
-        }
-        @media (pointer: coarse) {
-            * { cursor: auto !important; }
-            .cursor-dot, .cursor-ring { display: none; }
-        }
-
-        /* ── Scroll Progress ── */
-        #scroll-progress {
-            position: fixed; top: 0; left: 0; height: 2px; width: 0%;
-            background: linear-gradient(90deg, #0066CC, #34C759);
-            z-index: 9000;
-            border-radius: 0 2px 2px 0;
-            transition: width 0.08s linear;
-        }
-
-        /* ── Scroll-to-Top ── */
-        #scroll-top {
-            position: fixed; bottom: 96px; right: 32px; z-index: 40;
-            width: 42px; height: 42px;
-            background: rgba(255,255,255,0.8);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(0,0,0,0.08);
-            border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            opacity: 0; transform: translateY(14px);
-            transition: opacity 0.3s ease, transform 0.3s ease, background 0.2s ease;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.07);
-        }
-        #scroll-top.visible { opacity: 1; transform: translateY(0); }
-        #scroll-top:hover { background: white; transform: translateY(-3px) !important; }
-
-        .font-mono-tech { font-family: 'JetBrains Mono', monospace; }
-
-        /* ── Ambient BG ── */
-        .ambient-bg {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            z-index: -1;
-            background:
-                radial-gradient(circle at 20% 40%, rgba(0,102,204,0.08), transparent 50%),
-                radial-gradient(circle at 80% 60%, rgba(52,199,89,0.08), transparent 50%);
-            filter: blur(60px);
-            animation: pulseBg 12s ease-in-out infinite alternate;
-        }
-        @keyframes pulseBg {
-            0%   { transform: scale(1);    opacity: 0.8; }
-            100% { transform: scale(1.05); opacity: 1; }
-        }
-
-        /* ── Glass ── */
-        .glass-panel {
-            background: var(--glass-bg);
-            backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
-            border: 1px solid var(--glass-border);
-            box-shadow: 0 8px 32px rgba(0,0,0,0.03);
-            border-radius: 32px;
-        }
-        .glass-pill {
-            background: var(--glass-bg);
-            backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
-            border: 1px solid var(--glass-border);
-            box-shadow: 0 4px 16px rgba(0,0,0,0.01);
-            border-radius: 999px;
-        }
-
-        /* ── Hover Lift ── */
-        .hover-lift { transition: all 0.4s cubic-bezier(0.16,1,0.3,1); }
-        .hover-lift:hover { transform: translateY(-4px); box-shadow: 0 20px 40px rgba(0,0,0,0.06); }
-
-        /* ── Input Glass ── */
-        .input-glass {
-            background: rgba(255,255,255,0.5);
-            border: 1px solid rgba(0,0,0,0.08);
-            transition: all 0.3s ease;
-        }
-        .input-glass:focus {
-            border-color: var(--accent-blue);
-            background: rgba(255,255,255,0.9);
-            box-shadow: 0 0 0 4px rgba(0,102,204,0.1);
-            outline: none;
-        }
-
-        /* ── Icon Keyframes ── */
-        @keyframes subtleFloat {
-            0%,100% { transform: translateY(0) rotate(0deg); }
-            50%      { transform: translateY(-6px) rotate(2deg); }
-        }
-        @keyframes pulseGlow  { 0%,100% { opacity: 0.4; } 50% { opacity: 1; } }
-        @keyframes steamRise  {
-            0%   { transform: translateY(2px); opacity: 0; }
-            50%  { opacity: 0.6; }
-            100% { transform: translateY(-6px); opacity: 0; }
-        }
-        .icon-float { animation: subtleFloat 4s ease-in-out infinite; }
-        .icon-glow  { animation: pulseGlow  2s ease-in-out infinite; }
-        .steam-line { animation: steamRise  2.5s ease-out  infinite; }
-
-        /* ── Ticker ── */
-        @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-        .animate-ticker { display: flex; width: 200%; animation: ticker 20s linear infinite; }
-        .animate-ticker:hover { animation-play-state: paused; }
-
-        /* ════════════════════════════════
-           SCROLL REVEAL SYSTEM
-        ════════════════════════════════ */
-        [data-reveal] {
-            opacity: 0;
-            will-change: opacity, transform;
-            transition:
-                opacity  0.8s cubic-bezier(0.16,1,0.3,1),
-                transform 0.8s cubic-bezier(0.16,1,0.3,1);
-        }
-        [data-reveal="up"]    { transform: translateY(44px); }
-        [data-reveal="down"]  { transform: translateY(-30px); }
-        [data-reveal="left"]  { transform: translateX(-52px); }
-        [data-reveal="right"] { transform: translateX(52px); }
-        [data-reveal="scale"] { transform: scale(0.93); }
-        [data-reveal="fade"]  { transform: none; }
-        [data-reveal].visible { opacity: 1; transform: none !important; }
-
-        /* Stagger containers */
-        [data-stagger] > * {
-            opacity: 0;
-            transform: translateY(36px);
-            transition:
-                opacity   0.7s cubic-bezier(0.16,1,0.3,1),
-                transform 0.7s cubic-bezier(0.16,1,0.3,1);
-        }
-        [data-stagger].visible > *:nth-child(1) { opacity:1; transform:none; transition-delay:0.04s; }
-        [data-stagger].visible > *:nth-child(2) { opacity:1; transform:none; transition-delay:0.13s; }
-        [data-stagger].visible > *:nth-child(3) { opacity:1; transform:none; transition-delay:0.22s; }
-        [data-stagger].visible > *:nth-child(4) { opacity:1; transform:none; transition-delay:0.31s; }
-        [data-stagger].visible > *:nth-child(5) { opacity:1; transform:none; transition-delay:0.40s; }
-        [data-stagger].visible > *:nth-child(6) { opacity:1; transform:none; transition-delay:0.49s; }
-
-        /* ── Word-by-word Hero Reveal ── */
-        .word-wrap {
-            display: inline-block;
-            overflow: hidden;
-            vertical-align: bottom;
-            margin-right: 0.25em;
-        }
-        .word-inner {
-            display: inline-block;
-            transform: translateY(110%);
-            opacity: 0;
-            transition:
-                transform 0.72s cubic-bezier(0.16,1,0.3,1),
-                opacity   0.5s ease;
-        }
-        .hero-done .word-inner { transform: translateY(0); opacity: 1; }
-
-        /* ── 3D Tilt Cards ── */
-        .tilt-card {
-            transform-style: preserve-3d;
-            transition: transform 0.18s ease, box-shadow 0.3s ease;
-        }
-        .tilt-card:hover { box-shadow: 0 28px 56px rgba(0,0,0,0.07) !important; }
-
-        /* ── Magnetic Buttons ── */
-        .mag-btn {
-            transition:
-                transform 0.35s cubic-bezier(0.16,1,0.3,1),
-                box-shadow 0.3s ease;
-            display: inline-block;
-        }
-
-        /* ── Header entrance ── */
-        header {
-            opacity: 0;
-            animation: headerDrop 0.9s cubic-bezier(0.16,1,0.3,1) 0.25s forwards;
-        }
-        @keyframes headerDrop {
-            to { opacity: 1; }
-        }
-
-        /* ── Main page fade-in ── */
-        main {
-            opacity: 0;
-            animation: pageFade 0.5s ease 0.1s forwards;
-        }
-        @keyframes pageFade { to { opacity: 1; } }
-
-        /* ── Nav active state ── */
-        nav a.nav-active { color: #1D1D1F !important; font-weight: 600; }
+        :root{--bg-color:#F5F5F7;--text-main:#1D1D1F;--text-muted:#86868B;--accent-blue:#0066CC;--glass-bg:rgba(255,255,255,0.65);--glass-border:rgba(255,255,255,0.4)}
+        *{cursor:none!important}
+        body{font-family:'Space Grotesk',sans-serif;background-color:var(--bg-color);color:var(--text-main);overflow-x:hidden}
+        .cursor-dot{width:7px;height:7px;background:var(--accent-blue);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9999;transform:translate(-50%,-50%)}
+        .cursor-ring{width:34px;height:34px;border:1.5px solid rgba(0,102,204,0.35);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .25s ease,height .25s ease,background .25s ease,border-color .25s ease}
+        .cursor-ring.hovering{width:52px;height:52px;background:rgba(0,102,204,0.07);border-color:rgba(0,102,204,0.25)}
+        @media(pointer:coarse){*{cursor:auto!important}.cursor-dot,.cursor-ring{display:none}}
+        #scroll-progress{position:fixed;top:0;left:0;height:2px;width:0%;background:linear-gradient(90deg,#0066CC,#34C759);z-index:9000;border-radius:0 2px 2px 0;transition:width .08s linear}
+        #scroll-top{position:fixed;bottom:96px;right:32px;z-index:40;width:42px;height:42px;background:rgba(255,255,255,0.8);backdrop-filter:blur(12px);border:1px solid rgba(0,0,0,0.08);border-radius:50%;display:flex;align-items:center;justify-content:center;opacity:0;transform:translateY(14px);transition:opacity .3s ease,transform .3s ease,background .2s ease;box-shadow:0 4px 20px rgba(0,0,0,0.07)}
+        #scroll-top.visible{opacity:1;transform:translateY(0)}
+        #scroll-top:hover{background:white;transform:translateY(-3px)!important}
+        .font-mono-tech{font-family:'JetBrains Mono',monospace}
+        .ambient-bg{position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:-1;background:radial-gradient(circle at 20% 40%,rgba(0,102,204,0.08),transparent 50%),radial-gradient(circle at 80% 60%,rgba(52,199,89,0.08),transparent 50%);filter:blur(60px);animation:pulseBg 12s ease-in-out infinite alternate}
+        @keyframes pulseBg{0%{transform:scale(1);opacity:.8}100%{transform:scale(1.05);opacity:1}}
+        .glass-panel{background:var(--glass-bg);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1px solid var(--glass-border);box-shadow:0 8px 32px rgba(0,0,0,0.03);border-radius:32px}
+        .glass-pill{background:var(--glass-bg);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid var(--glass-border);box-shadow:0 4px 16px rgba(0,0,0,0.01);border-radius:999px}
+        .hover-lift{transition:all .4s cubic-bezier(.16,1,.3,1)}
+        .hover-lift:hover{transform:translateY(-4px);box-shadow:0 20px 40px rgba(0,0,0,0.06)}
+        .input-glass{background:rgba(255,255,255,0.5);border:1px solid rgba(0,0,0,0.08);transition:all .3s ease}
+        .input-glass:focus{border-color:var(--accent-blue);background:rgba(255,255,255,0.9);box-shadow:0 0 0 4px rgba(0,102,204,0.1);outline:none}
+        .input-glass.input-error{border-color:#FF3B30;box-shadow:0 0 0 4px rgba(255,59,48,0.1)}
+        .input-glass.input-success{border-color:#34C759;box-shadow:0 0 0 4px rgba(52,199,89,0.1)}
+        /* Toggle switch */
+        .toggle-switch{position:relative;width:40px;height:22px;flex-shrink:0;display:inline-block}
+        .toggle-switch input{opacity:0;width:0;height:0;position:absolute}
+        .toggle-track{position:absolute;inset:0;background:#E5E5EA;border-radius:999px;transition:background .25s ease;cursor:pointer}
+        .toggle-switch input:checked + .toggle-track{background:#0066CC}
+        .toggle-knob{position:absolute;top:3px;left:3px;width:16px;height:16px;background:white;border-radius:50%;transition:transform .25s cubic-bezier(.16,1,.3,1);box-shadow:0 1px 4px rgba(0,0,0,0.15);pointer-events:none}
+        .toggle-switch input:checked ~ .toggle-knob{transform:translateX(18px)}
+        /* Email field slide */
+        #email-field-wrapper{overflow:hidden;max-height:0;opacity:0;transition:max-height .45s cubic-bezier(.16,1,.3,1),opacity .35s ease}
+        #email-field-wrapper.open{max-height:110px;opacity:1}
+        /* Email status */
+        #email-status{display:none;align-items:center;gap:6px;font-size:11px;font-family:'JetBrains Mono',monospace;padding:6px 14px;border-radius:999px;font-weight:600;margin-top:4px}
+        #email-status.show{display:inline-flex}
+        #email-status.sent{background:rgba(52,199,89,0.12);color:#1A7F3C}
+        #email-status.failed{background:rgba(255,59,48,0.10);color:#C00}
+        @keyframes subtleFloat{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-6px) rotate(2deg)}}
+        @keyframes pulseGlow{0%,100%{opacity:.4}50%{opacity:1}}
+        @keyframes steamRise{0%{transform:translateY(2px);opacity:0}50%{opacity:.6}100%{transform:translateY(-6px);opacity:0}}
+        .icon-float{animation:subtleFloat 4s ease-in-out infinite}
+        .icon-glow{animation:pulseGlow 2s ease-in-out infinite}
+        .steam-line{animation:steamRise 2.5s ease-out infinite}
+        @keyframes ticker{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+        .animate-ticker{display:flex;width:200%;animation:ticker 20s linear infinite}
+        .animate-ticker:hover{animation-play-state:paused}
+        /* Scroll reveal */
+        [data-reveal]{opacity:0;will-change:opacity,transform;transition:opacity .8s cubic-bezier(.16,1,.3,1),transform .8s cubic-bezier(.16,1,.3,1)}
+        [data-reveal="up"]{transform:translateY(44px)}
+        [data-reveal="down"]{transform:translateY(-30px)}
+        [data-reveal="left"]{transform:translateX(-52px)}
+        [data-reveal="right"]{transform:translateX(52px)}
+        [data-reveal="scale"]{transform:scale(0.93)}
+        [data-reveal="fade"]{transform:none}
+        [data-reveal].visible{opacity:1;transform:none!important}
+        [data-stagger]>*{opacity:0;transform:translateY(36px);transition:opacity .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1)}
+        [data-stagger].visible>*:nth-child(1){opacity:1;transform:none;transition-delay:.04s}
+        [data-stagger].visible>*:nth-child(2){opacity:1;transform:none;transition-delay:.12s}
+        [data-stagger].visible>*:nth-child(3){opacity:1;transform:none;transition-delay:.20s}
+        [data-stagger].visible>*:nth-child(4){opacity:1;transform:none;transition-delay:.28s}
+        [data-stagger].visible>*:nth-child(5){opacity:1;transform:none;transition-delay:.36s}
+        [data-stagger].visible>*:nth-child(6){opacity:1;transform:none;transition-delay:.44s}
+        [data-stagger].visible>*:nth-child(7){opacity:1;transform:none;transition-delay:.52s}
+        /* Word reveal */
+        .word-wrap{display:inline-block;overflow:hidden;vertical-align:bottom;margin-right:.25em}
+        .word-inner{display:inline-block;transform:translateY(110%);opacity:0;transition:transform .72s cubic-bezier(.16,1,.3,1),opacity .5s ease}
+        .hero-done .word-inner{transform:translateY(0);opacity:1}
+        .tilt-card{transform-style:preserve-3d;transition:transform .18s ease,box-shadow .3s ease}
+        .tilt-card:hover{box-shadow:0 28px 56px rgba(0,0,0,0.07)!important}
+        .mag-btn{transition:transform .35s cubic-bezier(.16,1,.3,1),box-shadow .3s ease;display:inline-block}
+        header{opacity:0;animation:headerDrop .9s cubic-bezier(.16,1,.3,1) .25s forwards}
+        @keyframes headerDrop{to{opacity:1}}
+        main{opacity:0;animation:pageFade .5s ease .1s forwards}
+        @keyframes pageFade{to{opacity:1}}
+        nav a.nav-active{color:#1D1D1F!important;font-weight:600}
+        /* Success overlay */
+        #success-overlay{display:none;position:absolute;inset:0;background:rgba(245,245,247,0.96);backdrop-filter:blur(12px);border-radius:32px;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px;gap:16px;opacity:0;transition:opacity .4s ease;z-index:10}
+        #success-overlay.show{display:flex}
+        #success-overlay.visible{opacity:1}
+        .checkmark-circle{width:64px;height:64px;border-radius:50%;background:#34C759;display:flex;align-items:center;justify-content:center;animation:popIn .5s cubic-bezier(.16,1,.3,1) both}
+        @keyframes popIn{from{transform:scale(0);opacity:0}to{transform:scale(1);opacity:1}}
     </style>
 </head>
-
 <body class="antialiased selection:bg-[#1D1D1F] selection:text-white">
 
-    <!-- Custom Cursor -->
-    <div class="cursor-dot" id="cursorDot"></div>
-    <div class="cursor-ring" id="cursorRing"></div>
+<div class="cursor-dot" id="cursorDot"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+<div id="scroll-progress"></div>
+<button id="scroll-top" aria-label="Back to top">
+    <svg class="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"/>
+    </svg>
+</button>
+<div class="ambient-bg"></div>
 
-    <!-- Scroll Progress Bar -->
-    <div id="scroll-progress"></div>
+<!-- HEADER -->
+<header class="fixed top-6 left-0 right-0 z-50 px-4 flex justify-center">
+    <nav class="glass-pill px-6 py-3 flex items-center gap-8 font-medium text-sm">
+        <div class="flex items-center gap-2 font-bold text-lg tracking-tight">
+            <div class="w-2.5 h-2.5 rounded-full bg-[#0066CC] animate-pulse"></div>BGIABT
+        </div>
+        <div class="hidden md:flex gap-6 text-gray-500">
+            <a href="#perks" class="hover:text-black transition-colors duration-200">Incentives</a>
+            <a href="#inspiration" class="hover:text-black transition-colors duration-200">Inspiration</a>
+            <a href="#submit" class="hover:text-black transition-colors duration-200">Submit Abstract</a>
+        </div>
+        <a href="#submit" class="mag-btn bg-[#1D1D1F] text-white px-5 py-2 rounded-full hover:bg-black transition-colors font-medium">Apply Now</a>
+    </nav>
+</header>
 
-    <!-- Scroll-to-Top -->
-    <button id="scroll-top" aria-label="Back to top">
-        <svg class="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"/>
-        </svg>
-    </button>
+<main class="max-w-[1200px] mx-auto px-6 pt-40 pb-24 space-y-32">
 
-    <div class="ambient-bg"></div>
+    <!-- HERO -->
+    <section class="flex flex-col items-center text-center space-y-8">
+        <div id="hero-badge" data-reveal="down" class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/50 border border-black/5 text-xs font-semibold text-gray-600 backdrop-blur-md">
+            <span class="w-1.5 h-1.5 rounded-full bg-blue-600"></span>Global Launch Event // Open Entry
+        </div>
+        <h1 id="hero-h1" class="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight text-[#1D1D1F] leading-[1.05] max-w-5xl">
+            Bridging Global Innovation &amp; <span class="text-gray-400">Bangladeshi Talent.</span>
+        </h1>
+        <p data-reveal="up" data-delay="380" class="text-lg md:text-xl text-gray-500 max-w-2xl font-light">
+            Submit your most ambitious application, system, or protocol design. We supply the global scaling engineering infrastructure to build it—while you secure permanent ecosystem royalties.
+        </p>
+        <div data-reveal="up" data-delay="520" class="flex gap-4 pt-4">
+            <a href="#submit" class="mag-btn bg-[#1D1D1F] text-white px-8 py-4 rounded-full text-lg font-medium shadow-xl shadow-black/10">Pitch Your Dream Concept</a>
+        </div>
+    </section>
 
-    <!-- ══ HEADER ══ -->
-    <header class="fixed top-6 left-0 right-0 z-50 px-4 flex justify-center">
-        <nav class="glass-pill px-6 py-3 flex items-center gap-8 font-medium text-sm">
-            <div class="flex items-center gap-2 font-bold text-lg tracking-tight">
-                <div class="w-2.5 h-2.5 rounded-full bg-[#0066CC] animate-pulse"></div>
-                BGIABT
-            </div>
-            <div class="hidden md:flex gap-6 text-gray-500">
-                <a href="#perks"       class="hover:text-black transition-colors duration-200">Incentives</a>
-                <a href="#inspiration" class="hover:text-black transition-colors duration-200">Inspiration</a>
-                <a href="#submit"      class="hover:text-black transition-colors duration-200">Submit Abstract</a>
-            </div>
-            <a href="#submit" class="mag-btn bg-[#1D1D1F] text-white px-5 py-2 rounded-full hover:bg-black transition-colors font-medium">
-                Apply Now
-            </a>
-        </nav>
-    </header>
-
-    <main class="max-w-[1200px] mx-auto px-6 pt-40 pb-24 space-y-32">
-
-        <!-- ══ HERO ══ -->
-        <section class="flex flex-col items-center text-center space-y-8">
-
-            <div id="hero-badge" data-reveal="down" class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/50 border border-black/5 text-xs font-semibold text-gray-600 backdrop-blur-md">
-                <span class="w-1.5 h-1.5 rounded-full bg-blue-600"></span>
-                Global Launch Event // Open Entry
-            </div>
-
-            <h1 id="hero-h1" class="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight text-[#1D1D1F] leading-[1.05] max-w-5xl">
-                Bridging Global Innovation &amp; <span class="text-gray-400">Bangladeshi Talent.</span>
-            </h1>
-
-            <p data-reveal="up" data-delay="380" class="text-lg md:text-xl text-gray-500 max-w-2xl font-light">
-                Submit your most ambitious application, system, or protocol design. We supply the global scaling engineering infrastructure to build it—while you secure permanent ecosystem royalties.
-            </p>
-
-            <div data-reveal="up" data-delay="520" class="flex gap-4 pt-4">
-                <a href="#submit" class="mag-btn bg-[#1D1D1F] text-white px-8 py-4 rounded-full text-lg font-medium shadow-xl shadow-black/10">
-                    Pitch Your Dream Concept
-                </a>
-            </div>
-        </section>
-
-        <!-- ══ PERKS ══ -->
-        <section id="perks" class="grid grid-cols-1 md:grid-cols-3 gap-6" data-stagger>
-
-            <div class="glass-panel tilt-card p-8 md:p-10 hover-lift flex flex-col justify-between aspect-square">
-                <div class="flex justify-between items-start">
-                    <span class="text-sm font-medium text-gray-500">// PERMANENT UPSIDE</span>
-                    <div class="w-8 h-8 text-blue-600 icon-float">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                        </svg>
-                    </div>
-                </div>
-                <div>
-                    <div class="font-mono-tech text-4xl font-bold tracking-tight text-blue-600">Royalty</div>
-                    <p class="text-sm text-gray-500 font-light mt-3 leading-relaxed">
-                        Retain direct equity allocation and ongoing system royalties on execution metrics if your pipeline architecture gets selected.
-                    </p>
+    <!-- PERKS -->
+    <section id="perks" class="grid grid-cols-1 md:grid-cols-3 gap-6" data-stagger>
+        <div class="glass-panel tilt-card p-8 md:p-10 hover-lift flex flex-col justify-between aspect-square">
+            <div class="flex justify-between items-start">
+                <span class="text-sm font-medium text-gray-500">// PERMANENT UPSIDE</span>
+                <div class="w-8 h-8 text-blue-600 icon-float">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
                 </div>
             </div>
-
-            <div class="glass-panel tilt-card p-8 md:p-10 hover-lift flex flex-col justify-between aspect-square bg-gradient-to-br from-white/60 to-white/20">
-                <div class="flex justify-between items-start">
-                    <span class="text-sm font-medium text-gray-500">// PROTOCOL FUEL</span>
-                    <div class="w-8 h-8 text-zinc-800">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path class="steam-line" stroke-linecap="round" d="M9 4v2M12 3v3M15 4v2" />
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 11a5 5 0 015 5H7a5 5 0 015-5zM4 20h16" />
-                        </svg>
-                    </div>
-                </div>
-                <div>
-                    <div class="font-mono-tech text-4xl font-bold tracking-tight">Free Food</div>
-                    <p class="text-sm text-gray-500 font-light mt-3 leading-relaxed">
-                        Premium catered dining, dynamic high-performance stacks, and full break intervals entirely covered during the presentation loop.
-                    </p>
-                </div>
-            </div>
-
-            <div class="glass-panel tilt-card p-8 md:p-10 hover-lift flex flex-col justify-between aspect-square">
-                <div class="flex justify-between items-start">
-                    <span class="text-sm font-medium text-gray-500">// ECOSYSTEM GIFTS</span>
-                    <div class="w-8 h-8 text-emerald-600 icon-float">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path class="icon-glow" stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-14L4 7m8 4v10M4 7v10l8 4" />
-                        </svg>
-                    </div>
-                </div>
-                <div>
-                    <div class="font-mono-tech text-4xl font-bold tracking-tight text-emerald-600">Hardware</div>
-                    <p class="text-sm text-gray-500 font-light mt-3 leading-relaxed">
-                        Top tier developers and teams receive high-spec performance developer gear, cold storage hardware systems, and certificates.
-                    </p>
-                </div>
-            </div>
-        </section>
-
-        <!-- ══ INSPIRATION ══ -->
-        <section id="inspiration" class="glass-panel p-8 md:p-14 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <div class="space-y-6" data-reveal="left">
-                <h2 class="text-4xl font-bold tracking-tight">Ecosystem vectors ready for scaling.</h2>
-                <p class="text-gray-500 text-lg font-light leading-relaxed">
-                    We connect Bangladeshi engineers with cross-border tooling chains. Bring ideas focusing on decentralized transaction scaling or physical web3 architecture.
-                </p>
-                <div class="font-mono-tech text-xs text-gray-400 bg-white/50 p-4 rounded-2xl border border-white/60 inline-block">
-                    Focus Fields: Hardware Integrations || Transparent Value Protocols
-                </div>
-            </div>
-
-            <div class="space-y-4" data-stagger>
-                <div class="p-6 rounded-2xl bg-white border border-gray-100 shadow-sm hover-lift tilt-card">
-                    <div class="text-xs font-mono-tech text-blue-600 font-bold mb-1">// SYSTEM OPTION 01</div>
-                    <h4 class="font-bold text-md text-[#1D1D1F] mb-2">Finance , Ai System (Innovative) , DeFi</h4>
-                    <p class="text-xs text-gray-500 font-light leading-relaxed">New finance system idea/concept , better ai tech or new llm , decentralized finance.</p>
-                </div>
-                <div class="p-6 rounded-2xl bg-white border border-gray-100 shadow-sm hover-lift tilt-card">
-                    <div class="text-xs font-mono-tech text-emerald-600 font-bold mb-1">// SYSTEM OPTION 02</div>
-                    <h4 class="font-bold text-md text-[#1D1D1F] mb-2">Better app idea in any sector eg.Communication,tech,agriculture etc.</h4>
-                    <p class="text-xs text-gray-500 font-light leading-relaxed">High-volume transactional architectures optimizing global liquidity pathways directly to regional developer ecosystems without friction vectors.</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- ══ SHOWCASE ══ -->
-        <section id="showcase" class="space-y-20 pt-10">
-
-            <div class="space-y-6" data-reveal="up">
-                <div class="text-center font-mono-tech text-xs text-gray-400 uppercase tracking-widest font-bold">
-                    // Backed By Global Innovators
-                </div>
-                <div class="relative w-full overflow-hidden glass-panel py-5 rounded-3xl bg-white/40 border border-gray-200/50 shadow-sm">
-                    <div class="absolute inset-y-0 left-0 w-16 md:w-24 bg-gradient-to-r from-[#F5F5F7] to-transparent z-10 pointer-events-none"></div>
-                    <div class="absolute inset-y-0 right-0 w-16 md:w-24 bg-gradient-to-l from-[#F5F5F7] to-transparent z-10 pointer-events-none"></div>
-                    <div class="animate-ticker flex items-center justify-around">
-                        <img src="assets/sponsor1.png" alt="Sponsor 1" class="h-8 md:h-11 w-auto opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-300 mx-4">
-                        <img src="assets/sponsor2.png" alt="Sponsor 2" class="h-8 md:h-11 w-auto opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-300 mx-4">
-                        <img src="assets/sponsor1.png" alt="Sponsor 1" class="h-8 md:h-11 w-auto opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-300 mx-4">
-                        <img src="assets/sponsor2.png" alt="Sponsor 2" class="h-8 md:h-11 w-auto opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-300 mx-4">
-                    </div>
-                </div>
-            </div>
-
-            <div class="space-y-8">
-                <div class="text-center space-y-2" data-reveal="up">
-                    <h3 class="text-3xl font-bold tracking-tight text-[#1D1D1F]">Event Assets</h3>
-                    <p class="text-sm text-gray-500 font-light max-w-lg mx-auto">Exclusive tangible items provided to authorized innovators during the presentation loop.</p>
-                </div>
-
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-4 max-w-5xl mx-auto" data-stagger>
-                    <div class="col-span-2 glass-panel p-1.5 rounded-[28px] hover-lift group overflow-hidden relative bg-white/50 border border-gray-200/50 shadow-sm aspect-video md:aspect-[16/7]">
-                        <div class="absolute inset-0 bg-gray-50/50 z-0 rounded-[24px]"></div>
-                        <img src="assets/gatepass.png" alt="Gate Pass" class="w-full h-full object-cover rounded-2xl relative z-10 border border-gray-100 opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
-                        <div class="absolute bottom-4 left-4 md:bottom-5 md:left-5 z-20 font-mono-tech text-[9px] md:text-[10px] bg-white/95 backdrop-blur-md px-2.5 py-1 md:px-3 md:py-1.5 rounded-full border border-gray-200 font-bold uppercase tracking-widest text-[#1D1D1F] shadow-sm">01. Gate Pass</div>
-                    </div>
-
-                    <div class="col-span-1 md:row-span-2 glass-panel p-1.5 rounded-[28px] hover-lift group overflow-hidden relative bg-white/50 border border-gray-200/50 shadow-sm aspect-[3/4]">
-                        <div class="absolute inset-0 bg-gray-50/50 z-0 rounded-[24px]"></div>
-                        <img src="assets/id.png" alt="ID Card" class="w-full h-full object-cover object-center rounded-2xl relative z-10 border border-gray-100 opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
-                        <div class="absolute bottom-4 left-4 md:bottom-5 md:left-5 z-20 font-mono-tech text-[9px] md:text-[10px] bg-white/95 backdrop-blur-md px-2.5 py-1 md:px-3 md:py-1.5 rounded-full border border-gray-200 font-bold uppercase tracking-widest text-[#1D1D1F] shadow-sm">02. ID Matrix</div>
-                    </div>
-
-                    <div class="col-span-1 glass-panel p-1.5 rounded-[28px] hover-lift group overflow-hidden relative bg-white/50 border border-gray-200/50 shadow-sm aspect-square">
-                        <div class="absolute inset-0 bg-gray-50/50 z-0 rounded-[24px]"></div>
-                        <img src="assets/certificate.png" alt="Certificate" class="w-full h-full object-cover rounded-2xl relative z-10 border border-gray-100 opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
-                        <div class="absolute bottom-4 left-4 md:bottom-5 md:left-5 z-20 font-mono-tech text-[9px] md:text-[10px] bg-white/95 backdrop-blur-md px-2.5 py-1 md:px-3 md:py-1.5 rounded-full border border-gray-200 font-bold uppercase tracking-widest text-[#1D1D1F] shadow-sm">03. Credential</div>
-                    </div>
-
-                    <div class="col-span-2 md:col-span-3 glass-panel p-1.5 rounded-[28px] hover-lift group overflow-hidden relative bg-white/50 border border-gray-200/50 shadow-sm aspect-video md:aspect-[2/1]">
-                        <div class="absolute inset-0 bg-gray-50/50 z-0 rounded-[24px]"></div>
-                        <img src="assets/tshirt.png" alt="Protocol Apparel" class="w-full h-full object-cover object-center rounded-2xl relative z-10 border border-gray-100 opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
-                        <div class="absolute bottom-4 left-4 md:bottom-5 md:left-5 z-20 font-mono-tech text-[9px] md:text-[10px] bg-white/95 backdrop-blur-md px-2.5 py-1 md:px-3 md:py-1.5 rounded-full border border-gray-200 font-bold uppercase tracking-widest text-[#1D1D1F] shadow-sm">04. Protocol Apparel</div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ══ SUBMIT FORM ══ -->
-        <section id="submit" class="glass-panel p-8 md:p-12 max-w-xl mx-auto space-y-8" data-reveal="scale">
-            <div class="text-center space-y-2">
-                <h3 class="text-3xl font-bold tracking-tight">Submit Abstract</h3>
-                <p class="text-sm text-gray-500">Your design will be encrypted and pushed onto the compilation registry.</p>
-            </div>
-
-            <form id="sheetdb-form" class="space-y-5" data-stagger>
-                <div>
-                    <label class="block text-xs font-mono-tech text-gray-500 mb-2 uppercase tracking-wide">Innovator Name</label>
-                    <input type="text" name="data[Name]" required placeholder="Enter your full name" class="input-glass w-full px-5 py-3.5 rounded-2xl outline-none font-medium placeholder:text-gray-300 text-sm">
-                </div>
-                <div>
-                    <label class="block text-xs font-mono-tech text-gray-500 mb-2 uppercase tracking-wide">Mobile Number</label>
-                    <div class="flex">
-                        <div class="flex items-center justify-center px-4 rounded-l-2xl bg-white/40 border border-r-0 border-black/10 font-mono-tech text-sm text-gray-600 select-none backdrop-blur-sm">+880</div>
-                        <input type="tel" name="data[Mobile]" required pattern="[0-9]{10}" placeholder="1XXXXXXXXX" class="input-glass w-full px-5 py-3.5 rounded-r-2xl outline-none font-medium placeholder:text-gray-300 text-sm tracking-wider">
-                    </div>
-                </div>
-                <div>
-                    <label class="block text-xs font-mono-tech text-gray-500 mb-2 uppercase tracking-wide">Project Vector Title</label>
-                    <input type="text" name="data[ProjectName]" required placeholder="e.g., OLED Smart Card Engine" class="input-glass w-full px-5 py-3.5 rounded-2xl outline-none font-medium placeholder:text-gray-300 text-sm">
-                </div>
-                <div>
-                    <label class="block text-xs font-mono-tech text-gray-500 mb-2 uppercase tracking-wide">System Blueprint &amp; Vision</label>
-                    <textarea name="data[Description]" required rows="4" placeholder="Detail your pipeline blueprint, structural innovation, and resource dependencies..." class="input-glass w-full px-5 py-3.5 rounded-2xl outline-none font-medium placeholder:text-gray-300 text-sm resize-none"></textarea>
-                </div>
-                <button type="submit" id="action-btn" class="mag-btn w-full bg-[#1D1D1F] text-white px-6 py-4 rounded-2xl font-medium text-md hover:bg-black active:scale-[0.99] transition-all duration-200 shadow-md">
-                    Deploy Architecture Abstract
-                </button>
-            </form>
-        </section>
-    </main>
-
-    <!-- ══ FOOTER ══ -->
-    <footer class="border-t border-gray-200 bg-white/50 backdrop-blur-md" data-reveal="up">
-        <div class="max-w-[1200px] mx-auto px-6 py-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm font-medium text-gray-500">
-            <div class="flex items-center gap-2">
-                <span class="text-black font-bold">BGIABT Protocol</span> &copy; 2026
-            </div>
-            <div class="flex gap-6 font-mono-tech text-xs">
-                <a href="https://web3blockchain.pro.bd" class="hover:text-black transition-colors">web3blockchain.pro.bd</a>
-                <a href="#" class="hover:text-black transition-colors">Compilation Specs</a>
+            <div>
+                <div class="font-mono-tech text-4xl font-bold tracking-tight text-blue-600">Royalty</div>
+                <p class="text-sm text-gray-500 font-light mt-3 leading-relaxed">Retain direct equity allocation and ongoing system royalties on execution metrics if your pipeline architecture gets selected.</p>
             </div>
         </div>
-    </footer>
-
-    <!-- ══ VIDEO TRIGGER ══ -->
-    <div class="fixed bottom-8 right-8 z-40 flex flex-col items-center">
-        <div class="absolute bottom-full mb-4 px-4 py-2 rounded-xl bg-[#1D1D1F] text-white text-xs font-medium whitespace-nowrap shadow-xl animate-bounce pointer-events-none flex flex-col items-center">
-            Watch intro video
-            <div class="absolute top-full w-2.5 h-2.5 bg-[#1D1D1F] rotate-45 -mt-1.5 rounded-sm"></div>
+        <div class="glass-panel tilt-card p-8 md:p-10 hover-lift flex flex-col justify-between aspect-square bg-gradient-to-br from-white/60 to-white/20">
+            <div class="flex justify-between items-start">
+                <span class="text-sm font-medium text-gray-500">// PROTOCOL FUEL</span>
+                <div class="w-8 h-8 text-zinc-800">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path class="steam-line" stroke-linecap="round" d="M9 4v2M12 3v3M15 4v2"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 11a5 5 0 015 5H7a5 5 0 015-5zM4 20h16"/>
+                    </svg>
+                </div>
+            </div>
+            <div>
+                <div class="font-mono-tech text-4xl font-bold tracking-tight">Free Food</div>
+                <p class="text-sm text-gray-500 font-light mt-3 leading-relaxed">Premium catered dining, dynamic high-performance stacks, and full break intervals entirely covered during the presentation loop.</p>
+            </div>
         </div>
-        <button id="video-trigger" class="glass-pill w-14 h-14 flex items-center justify-center hover:scale-110 transition-transform duration-300 shadow-xl group relative">
-            <div class="absolute inset-0 rounded-full bg-blue-600 animate-ping opacity-20"></div>
-            <svg class="w-5 h-5 text-blue-600 ml-1 group-hover:text-[#1D1D1F] transition-colors relative z-10" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M8 5v14l11-7z"/>
-            </svg>
-        </button>
-    </div>
+        <div class="glass-panel tilt-card p-8 md:p-10 hover-lift flex flex-col justify-between aspect-square">
+            <div class="flex justify-between items-start">
+                <span class="text-sm font-medium text-gray-500">// ECOSYSTEM GIFTS</span>
+                <div class="w-8 h-8 text-emerald-600 icon-float">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path class="icon-glow" stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-14L4 7m8 4v10M4 7v10l8 4"/></svg>
+                </div>
+            </div>
+            <div>
+                <div class="font-mono-tech text-4xl font-bold tracking-tight text-emerald-600">Hardware</div>
+                <p class="text-sm text-gray-500 font-light mt-3 leading-relaxed">Top tier developers and teams receive high-spec performance developer gear, cold storage hardware systems, and certificates.</p>
+            </div>
+        </div>
+    </section>
 
-    <!-- ══ VIDEO MODAL ══ -->
-    <div id="video-modal" class="fixed inset-0 z-[60] flex items-center justify-center hidden opacity-0 transition-opacity duration-300 bg-[#1D1D1F]/40 backdrop-blur-md">
-        <div class="relative w-full max-w-4xl mx-6 glass-panel p-2 overflow-hidden transform scale-95 transition-transform duration-300" id="video-container">
-            <button id="close-video" class="absolute top-6 right-6 z-10 w-10 h-10 bg-black/40 hover:bg-black/60 backdrop-blur-md rounded-full flex items-center justify-center text-white transition-colors">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+    <!-- INSPIRATION -->
+    <section id="inspiration" class="glass-panel p-8 md:p-14 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        <div class="space-y-6" data-reveal="left">
+            <h2 class="text-4xl font-bold tracking-tight">Ecosystem vectors ready for scaling.</h2>
+            <p class="text-gray-500 text-lg font-light leading-relaxed">We connect Bangladeshi engineers with cross-border tooling chains. Bring ideas focusing on decentralized transaction scaling or physical web3 architecture.</p>
+            <div class="font-mono-tech text-xs text-gray-400 bg-white/50 p-4 rounded-2xl border border-white/60 inline-block">Focus Fields: Hardware Integrations || Transparent Value Protocols</div>
+        </div>
+        <div class="space-y-4" data-stagger>
+            <div class="p-6 rounded-2xl bg-white border border-gray-100 shadow-sm hover-lift tilt-card">
+                <div class="text-xs font-mono-tech text-blue-600 font-bold mb-1">// SYSTEM OPTION 01</div>
+                <h4 class="font-bold text-md text-[#1D1D1F] mb-2">Smart Credit Cards with OLED Arrays</h4>
+                <p class="text-xs text-gray-500 font-light leading-relaxed">Physical card modules displaying real-time balance structures and secure off-chain account metrics straight onto consumer hardware templates.</p>
+            </div>
+            <div class="p-6 rounded-2xl bg-white border border-gray-100 shadow-sm hover-lift tilt-card">
+                <div class="text-xs font-mono-tech text-emerald-600 font-bold mb-1">// SYSTEM OPTION 02</div>
+                <h4 class="font-bold text-md text-[#1D1D1F] mb-2">Low-Drag Universal Remittance Layer</h4>
+                <p class="text-xs text-gray-500 font-light leading-relaxed">High-volume transactional architectures optimizing global liquidity pathways directly to regional developer ecosystems without friction vectors.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SHOWCASE -->
+    <section id="showcase" class="space-y-20 pt-10">
+        <div class="space-y-6" data-reveal="up">
+            <div class="text-center font-mono-tech text-xs text-gray-400 uppercase tracking-widest font-bold">// Backed By Global Innovators</div>
+            <div class="relative w-full overflow-hidden glass-panel py-5 rounded-3xl bg-white/40 border border-gray-200/50 shadow-sm">
+                <div class="absolute inset-y-0 left-0 w-16 md:w-24 bg-gradient-to-r from-[#F5F5F7] to-transparent z-10 pointer-events-none"></div>
+                <div class="absolute inset-y-0 right-0 w-16 md:w-24 bg-gradient-to-l from-[#F5F5F7] to-transparent z-10 pointer-events-none"></div>
+                <div class="animate-ticker flex items-center justify-around">
+                    <img src="assets/sponsor1.png" alt="Sponsor 1" class="h-8 md:h-11 w-auto opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-300 mx-4">
+                    <img src="assets/sponsor2.png" alt="Sponsor 2" class="h-8 md:h-11 w-auto opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-300 mx-4">
+                    <img src="assets/sponsor1.png" alt="Sponsor 1" class="h-8 md:h-11 w-auto opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-300 mx-4">
+                    <img src="assets/sponsor2.png" alt="Sponsor 2" class="h-8 md:h-11 w-auto opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-300 mx-4">
+                </div>
+            </div>
+        </div>
+        <div class="space-y-8">
+            <div class="text-center space-y-2" data-reveal="up">
+                <h3 class="text-3xl font-bold tracking-tight text-[#1D1D1F]">Event Assets</h3>
+                <p class="text-sm text-gray-500 font-light max-w-lg mx-auto">Exclusive tangible items provided to authorized innovators during the presentation loop.</p>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-4 max-w-5xl mx-auto" data-stagger>
+                <div class="col-span-2 glass-panel p-1.5 rounded-[28px] hover-lift group overflow-hidden relative bg-white/50 border border-gray-200/50 shadow-sm aspect-video md:aspect-[16/7]">
+                    <div class="absolute inset-0 bg-gray-50/50 z-0 rounded-[24px]"></div>
+                    <img src="assets/gatepass.png" alt="Gate Pass" class="w-full h-full object-cover rounded-2xl relative z-10 border border-gray-100 opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+                    <div class="absolute bottom-4 left-4 md:bottom-5 md:left-5 z-20 font-mono-tech text-[9px] md:text-[10px] bg-white/95 backdrop-blur-md px-2.5 py-1 md:px-3 md:py-1.5 rounded-full border border-gray-200 font-bold uppercase tracking-widest text-[#1D1D1F] shadow-sm">01. Gate Pass</div>
+                </div>
+                <div class="col-span-1 md:row-span-2 glass-panel p-1.5 rounded-[28px] hover-lift group overflow-hidden relative bg-white/50 border border-gray-200/50 shadow-sm aspect-[3/4]">
+                    <div class="absolute inset-0 bg-gray-50/50 z-0 rounded-[24px]"></div>
+                    <img src="assets/id.png" alt="ID Card" class="w-full h-full object-cover object-center rounded-2xl relative z-10 border border-gray-100 opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+                    <div class="absolute bottom-4 left-4 md:bottom-5 md:left-5 z-20 font-mono-tech text-[9px] md:text-[10px] bg-white/95 backdrop-blur-md px-2.5 py-1 md:px-3 md:py-1.5 rounded-full border border-gray-200 font-bold uppercase tracking-widest text-[#1D1D1F] shadow-sm">02. ID Matrix</div>
+                </div>
+                <div class="col-span-1 glass-panel p-1.5 rounded-[28px] hover-lift group overflow-hidden relative bg-white/50 border border-gray-200/50 shadow-sm aspect-square">
+                    <div class="absolute inset-0 bg-gray-50/50 z-0 rounded-[24px]"></div>
+                    <img src="assets/certificate.png" alt="Certificate" class="w-full h-full object-cover rounded-2xl relative z-10 border border-gray-100 opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+                    <div class="absolute bottom-4 left-4 md:bottom-5 md:left-5 z-20 font-mono-tech text-[9px] md:text-[10px] bg-white/95 backdrop-blur-md px-2.5 py-1 md:px-3 md:py-1.5 rounded-full border border-gray-200 font-bold uppercase tracking-widest text-[#1D1D1F] shadow-sm">03. Credential</div>
+                </div>
+                <div class="col-span-2 md:col-span-3 glass-panel p-1.5 rounded-[28px] hover-lift group overflow-hidden relative bg-white/50 border border-gray-200/50 shadow-sm aspect-video md:aspect-[2/1]">
+                    <div class="absolute inset-0 bg-gray-50/50 z-0 rounded-[24px]"></div>
+                    <img src="assets/tshirt.png" alt="Protocol Apparel" class="w-full h-full object-cover object-center rounded-2xl relative z-10 border border-gray-100 opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+                    <div class="absolute bottom-4 left-4 md:bottom-5 md:left-5 z-20 font-mono-tech text-[9px] md:text-[10px] bg-white/95 backdrop-blur-md px-2.5 py-1 md:px-3 md:py-1.5 rounded-full border border-gray-200 font-bold uppercase tracking-widest text-[#1D1D1F] shadow-sm">04. Protocol Apparel</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SUBMIT FORM -->
+    <section id="submit" class="glass-panel p-8 md:p-12 max-w-xl mx-auto space-y-8 relative" data-reveal="scale">
+
+        <!-- Success overlay -->
+        <div id="success-overlay">
+            <div class="checkmark-circle">
+                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/>
                 </svg>
-            </button>
-            <div class="aspect-video bg-black w-full rounded-[24px] overflow-hidden shadow-inner relative">
-                <video id="intro-video" class="w-full h-full object-cover" controls preload="none">
-                    <source src="intro.mp4" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
             </div>
+            <h3 class="text-2xl font-bold tracking-tight text-[#1D1D1F]">Abstract Received</h3>
+            <p class="text-gray-500 text-sm max-w-xs" id="success-message">Your design has been logged in the compilation registry.</p>
+            <div id="email-status"></div>
+            <button id="reset-form-btn" class="mt-2 text-xs font-mono-tech text-gray-400 hover:text-black transition-colors underline underline-offset-2">Submit another abstract</button>
+        </div>
+
+        <div class="text-center space-y-2">
+            <h3 class="text-3xl font-bold tracking-tight">Submit Abstract</h3>
+            <p class="text-sm text-gray-500">Your design will be encrypted and pushed onto the compilation registry.</p>
+        </div>
+
+        <form id="sheetdb-form" class="space-y-5" data-stagger>
+            <div>
+                <label class="block text-xs font-mono-tech text-gray-500 mb-2 uppercase tracking-wide">Innovator Name</label>
+                <input type="text" name="data[Name]" id="f-name" required placeholder="Enter your full name" class="input-glass w-full px-5 py-3.5 rounded-2xl outline-none font-medium placeholder:text-gray-300 text-sm">
+            </div>
+            <div>
+                <label class="block text-xs font-mono-tech text-gray-500 mb-2 uppercase tracking-wide">Mobile Number</label>
+                <div class="flex">
+                    <div class="flex items-center justify-center px-4 rounded-l-2xl bg-white/40 border border-r-0 border-black/10 font-mono-tech text-sm text-gray-600 select-none backdrop-blur-sm">+880</div>
+                    <input type="tel" name="data[Mobile]" id="f-mobile" required pattern="[0-9]{10}" placeholder="1XXXXXXXXX" class="input-glass w-full px-5 py-3.5 rounded-r-2xl outline-none font-medium placeholder:text-gray-300 text-sm tracking-wider">
+                </div>
+            </div>
+            <div>
+                <label class="block text-xs font-mono-tech text-gray-500 mb-2 uppercase tracking-wide">Project Vector Title</label>
+                <input type="text" name="data[ProjectName]" id="f-project" required placeholder="e.g., OLED Smart Card Engine" class="input-glass w-full px-5 py-3.5 rounded-2xl outline-none font-medium placeholder:text-gray-300 text-sm">
+            </div>
+            <div>
+                <label class="block text-xs font-mono-tech text-gray-500 mb-2 uppercase tracking-wide">System Blueprint &amp; Vision</label>
+                <textarea name="data[Description]" id="f-desc" required rows="4" placeholder="Detail your pipeline blueprint, structural innovation, and resource dependencies..." class="input-glass w-full px-5 py-3.5 rounded-2xl outline-none font-medium placeholder:text-gray-300 text-sm resize-none"></textarea>
+            </div>
+
+            <!-- EMAIL TOGGLE CARD -->
+            <div class="bg-white/40 border border-white/60 rounded-2xl p-4 space-y-3">
+                <div class="flex items-center justify-between gap-3">
+                    <div>
+                        <p class="text-sm font-semibold text-[#1D1D1F] flex items-center gap-1.5">
+                            <svg class="w-3.5 h-3.5 text-blue-600 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                            Send me a confirmation email
+                        </p>
+                        <p class="text-xs text-gray-400 mt-0.5">Receive a receipt of your abstract submission</p>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="email-toggle">
+                        <div class="toggle-track"></div>
+                        <div class="toggle-knob"></div>
+                    </label>
+                </div>
+                <!-- Slides open on toggle -->
+                <div id="email-field-wrapper">
+                    <label class="block text-xs font-mono-tech text-gray-500 mb-2 uppercase tracking-wide">Email Address</label>
+                    <div class="relative">
+                        <svg class="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-300 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                        </svg>
+                        <input type="email" id="f-email" placeholder="you@example.com" class="input-glass w-full pl-11 pr-5 py-3.5 rounded-2xl outline-none font-medium placeholder:text-gray-300 text-sm">
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" id="action-btn" class="mag-btn w-full bg-[#1D1D1F] text-white px-6 py-4 rounded-2xl font-medium text-md hover:bg-black active:scale-[0.99] transition-all duration-200 shadow-md">
+                Deploy Architecture Abstract
+            </button>
+        </form>
+    </section>
+</main>
+
+<!-- FOOTER -->
+<footer class="border-t border-gray-200 bg-white/50 backdrop-blur-md" data-reveal="up">
+    <div class="max-w-[1200px] mx-auto px-6 py-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm font-medium text-gray-500">
+        <div class="flex items-center gap-2"><span class="text-black font-bold">BGIABT Protocol</span> &copy; 2026</div>
+        <div class="flex gap-6 font-mono-tech text-xs">
+            <a href="https://web3blockchain.pro.bd" class="hover:text-black transition-colors">web3blockchain.pro.bd</a>
+            <a href="#" class="hover:text-black transition-colors">Compilation Specs</a>
         </div>
     </div>
+</footer>
+
+<!-- VIDEO TRIGGER -->
+<div class="fixed bottom-8 right-8 z-40 flex flex-col items-center">
+    <div class="absolute bottom-full mb-4 px-4 py-2 rounded-xl bg-[#1D1D1F] text-white text-xs font-medium whitespace-nowrap shadow-xl animate-bounce pointer-events-none flex flex-col items-center">
+        Watch intro video
+        <div class="absolute top-full w-2.5 h-2.5 bg-[#1D1D1F] rotate-45 -mt-1.5 rounded-sm"></div>
+    </div>
+    <button id="video-trigger" class="glass-pill w-14 h-14 flex items-center justify-center hover:scale-110 transition-transform duration-300 shadow-xl group relative">
+        <div class="absolute inset-0 rounded-full bg-blue-600 animate-ping opacity-20"></div>
+        <svg class="w-5 h-5 text-blue-600 ml-1 group-hover:text-[#1D1D1F] transition-colors relative z-10" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+    </button>
+</div>
+
+<!-- VIDEO MODAL -->
+<div id="video-modal" class="fixed inset-0 z-[60] flex items-center justify-center hidden opacity-0 transition-opacity duration-300 bg-[#1D1D1F]/40 backdrop-blur-md">
+    <div class="relative w-full max-w-4xl mx-6 glass-panel p-2 overflow-hidden transform scale-95 transition-transform duration-300" id="video-container">
+        <button id="close-video" class="absolute top-6 right-6 z-10 w-10 h-10 bg-black/40 hover:bg-black/60 backdrop-blur-md rounded-full flex items-center justify-center text-white transition-colors">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+        <div class="aspect-video bg-black w-full rounded-[24px] overflow-hidden shadow-inner relative">
+            <video id="intro-video" class="w-full h-full object-cover" controls preload="none">
+                <source src="intro.mp4" type="video/mp4">
+            </video>
+        </div>
+    </div>
+</div>
 
 <script>
-/* ═══════════════════════════════════════
-   1. CUSTOM CURSOR
-═══════════════════════════════════════ */
-const dot  = document.getElementById('cursorDot');
-const ring = document.getElementById('cursorRing');
-let mx = -100, my = -100, rx = -100, ry = -100;
-
-document.addEventListener('mousemove', e => {
-    mx = e.clientX; my = e.clientY;
-    dot.style.left = mx + 'px'; dot.style.top = my + 'px';
+/* CURSOR */
+const dot=document.getElementById('cursorDot'),ring=document.getElementById('cursorRing');
+let mx=-100,my=-100,rx=-100,ry=-100;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;dot.style.left=mx+'px';dot.style.top=my+'px'});
+(function ar(){rx+=(mx-rx)*.13;ry+=(my-ry)*.13;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(ar)})();
+document.querySelectorAll('a,button,input,textarea,.tilt-card,[data-reveal],label').forEach(el=>{
+    el.addEventListener('mouseenter',()=>ring.classList.add('hovering'));
+    el.addEventListener('mouseleave',()=>ring.classList.remove('hovering'));
 });
 
-(function animateRing() {
-    rx += (mx - rx) * 0.13;
-    ry += (my - ry) * 0.13;
-    ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
-    requestAnimationFrame(animateRing);
-})();
+/* SCROLL PROGRESS + SCROLL-TOP */
+const pb=document.getElementById('scroll-progress'),stb=document.getElementById('scroll-top');
+window.addEventListener('scroll',()=>{
+    pb.style.width=(window.scrollY/(document.documentElement.scrollHeight-window.innerHeight)*100)+'%';
+    stb.classList.toggle('visible',window.scrollY>450);
+},{passive:true});
+stb.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
 
-const hoverables = 'a, button, input, textarea, .tilt-card, [data-reveal], label';
-document.querySelectorAll(hoverables).forEach(el => {
-    el.addEventListener('mouseenter', () => ring.classList.add('hovering'));
-    el.addEventListener('mouseleave', () => ring.classList.remove('hovering'));
-});
-
-
-/* ═══════════════════════════════════════
-   2. SCROLL PROGRESS + SCROLL-TO-TOP
-═══════════════════════════════════════ */
-const progressBar  = document.getElementById('scroll-progress');
-const scrollTopBtn = document.getElementById('scroll-top');
-
-window.addEventListener('scroll', () => {
-    const pct = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight) * 100;
-    progressBar.style.width = pct + '%';
-    scrollTopBtn.classList.toggle('visible', window.scrollY > 450);
-}, { passive: true });
-
-scrollTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-
-
-/* ═══════════════════════════════════════
-   3. HERO HEADLINE — WORD REVEAL
-═══════════════════════════════════════ */
-function buildWordReveal(el) {
-    // Collect all child nodes, wrapping each word
-    const result = document.createDocumentFragment();
-    el.childNodes.forEach(node => {
-        if (node.nodeType === 3) { // plain text
-            node.textContent.split(/(\s+)/).forEach(part => {
-                if (!part.trim()) { result.appendChild(document.createTextNode(' ')); return; }
-                const wrap  = document.createElement('span');
-                const inner = document.createElement('span');
-                wrap.className  = 'word-wrap';
-                inner.className = 'word-inner';
-                inner.textContent = part;
-                wrap.appendChild(inner);
-                result.appendChild(wrap);
-            });
-        } else if (node.nodeType === 1) { // element (the gray span)
-            node.textContent.split(/(\s+)/).forEach(part => {
-                if (!part.trim()) { result.appendChild(document.createTextNode(' ')); return; }
-                const wrap  = document.createElement('span');
-                const inner = document.createElement('span');
-                wrap.className  = 'word-wrap';
-                inner.className = 'word-inner text-gray-400';
-                inner.textContent = part;
-                wrap.appendChild(inner);
-                result.appendChild(wrap);
-            });
-        }
-    });
-    el.innerHTML = '';
-    el.appendChild(result);
-}
-
-const heroH1 = document.getElementById('hero-h1');
-buildWordReveal(heroH1);
-
-// Stagger word delays
-heroH1.querySelectorAll('.word-inner').forEach((w, i) => {
-    w.style.transitionDelay = (i * 0.055) + 's';
-});
-
-// Trigger hero on load
-setTimeout(() => heroH1.classList.add('hero-done'), 300);
-
-// Hero badge (above fold)
-const badge = document.getElementById('hero-badge');
-setTimeout(() => badge.classList.add('visible'), 150);
-
-// Items with explicit data-delay (above fold)
-document.querySelectorAll('[data-delay]').forEach(el => {
-    const d = parseInt(el.getAttribute('data-delay') || 0);
-    setTimeout(() => el.classList.add('visible'), d + 100);
-});
-
-
-/* ═══════════════════════════════════════
-   4. INTERSECTION OBSERVER — SCROLL REVEALS
-═══════════════════════════════════════ */
-const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-        if (!entry.isIntersecting) return;
-        entry.target.classList.add('visible');
-        observer.unobserve(entry.target);
-    });
-}, { threshold: 0.11, rootMargin: '0px 0px -36px 0px' });
-
-document.querySelectorAll('[data-reveal]:not([data-delay]), [data-stagger]').forEach(el => {
-    observer.observe(el);
-});
-
-
-/* ═══════════════════════════════════════
-   5. 3D TILT CARDS
-═══════════════════════════════════════ */
-document.querySelectorAll('.tilt-card').forEach(card => {
-    card.addEventListener('mousemove', e => {
-        const r  = card.getBoundingClientRect();
-        const dx = (e.clientX - r.left  - r.width  / 2) / (r.width  / 2);
-        const dy = (e.clientY - r.top   - r.height / 2) / (r.height / 2);
-        card.style.transform = `perspective(700px) rotateY(${dx * 6}deg) rotateX(${-dy * 6}deg) translateY(-4px) scale(1.01)`;
-    });
-    card.addEventListener('mouseleave', () => {
-        card.style.transform = 'perspective(700px) rotateY(0deg) rotateX(0deg) translateY(0) scale(1)';
-    });
-});
-
-
-/* ═══════════════════════════════════════
-   6. MAGNETIC BUTTONS
-═══════════════════════════════════════ */
-document.querySelectorAll('.mag-btn').forEach(btn => {
-    btn.addEventListener('mousemove', e => {
-        const r  = btn.getBoundingClientRect();
-        const dx = (e.clientX - r.left - r.width  / 2) * 0.30;
-        const dy = (e.clientY - r.top  - r.height / 2) * 0.30;
-        btn.style.transform = `translate(${dx}px, ${dy}px)`;
-    });
-    btn.addEventListener('mouseleave', () => {
-        btn.style.transform = 'translate(0,0)';
-    });
-});
-
-
-/* ═══════════════════════════════════════
-   7. PARALLAX — AMBIENT BACKGROUND
-═══════════════════════════════════════ */
-const ambBg = document.querySelector('.ambient-bg');
-window.addEventListener('scroll', () => {
-    ambBg.style.transform = `translateY(${window.scrollY * 0.14}px)`;
-}, { passive: true });
-
-
-/* ═══════════════════════════════════════
-   8. ACTIVE NAV LINKS
-═══════════════════════════════════════ */
-const navLinks = document.querySelectorAll('nav a[href^="#"]');
-const secObs = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-        if (!e.isIntersecting) return;
-        navLinks.forEach(a => {
-            a.classList.toggle('nav-active', a.getAttribute('href') === '#' + e.target.id);
+/* HERO WORD REVEAL */
+function buildWords(el){
+    const frag=document.createDocumentFragment();
+    el.childNodes.forEach(node=>{
+        const gray=node.nodeType===1;
+        node.textContent.split(/(\s+)/).forEach(p=>{
+            if(!p.trim()){frag.appendChild(document.createTextNode(' '));return;}
+            const w=document.createElement('span'),i=document.createElement('span');
+            w.className='word-wrap';i.className='word-inner'+(gray?' text-gray-400':'');
+            i.textContent=p;w.appendChild(i);frag.appendChild(w);
         });
     });
-}, { threshold: 0.45 });
-document.querySelectorAll('section[id]').forEach(s => secObs.observe(s));
+    el.innerHTML='';el.appendChild(frag);
+}
+const h1=document.getElementById('hero-h1');
+buildWords(h1);
+h1.querySelectorAll('.word-inner').forEach((w,i)=>{w.style.transitionDelay=(i*.055)+'s'});
+setTimeout(()=>h1.classList.add('hero-done'),300);
+setTimeout(()=>document.getElementById('hero-badge').classList.add('visible'),150);
+document.querySelectorAll('[data-delay]').forEach(el=>{
+    setTimeout(()=>el.classList.add('visible'),parseInt(el.getAttribute('data-delay')||0)+100);
+});
 
+/* SCROLL REVEAL */
+const obs=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{if(!e.isIntersecting)return;e.target.classList.add('visible');obs.unobserve(e.target)});
+},{threshold:.11,rootMargin:'0px 0px -36px 0px'});
+document.querySelectorAll('[data-reveal]:not([data-delay]),[data-stagger]').forEach(el=>obs.observe(el));
 
-/* ═══════════════════════════════════════
-   9. VIDEO MODAL
-═══════════════════════════════════════ */
-const videoTrigger   = document.getElementById('video-trigger');
-const videoModal     = document.getElementById('video-modal');
-const closeVideo     = document.getElementById('close-video');
-const introVideo     = document.getElementById('intro-video');
-const videoContainer = document.getElementById('video-container');
-
-const openModal = () => {
-    videoModal.classList.remove('hidden');
-    setTimeout(() => {
-        videoModal.classList.remove('opacity-0');
-        videoContainer.classList.remove('scale-95');
-        videoContainer.classList.add('scale-100');
-    }, 10);
-    introVideo.play();
-};
-const closeModal = () => {
-    videoModal.classList.add('opacity-0');
-    videoContainer.classList.remove('scale-100');
-    videoContainer.classList.add('scale-95');
-    introVideo.pause();
-    setTimeout(() => videoModal.classList.add('hidden'), 300);
-};
-videoTrigger.addEventListener('click', openModal);
-closeVideo.addEventListener('click', closeModal);
-videoModal.addEventListener('click', e => { if (e.target === videoModal) closeModal(); });
-
-
-/* ═══════════════════════════════════════
-   10. FORM SUBMISSION
-═══════════════════════════════════════ */
-const sheetForm = document.getElementById('sheetdb-form');
-const actionBtn = document.getElementById('action-btn');
-
-sheetForm.addEventListener('submit', event => {
-    event.preventDefault();
-    actionBtn.innerText     = 'Synchronizing with SheetDB Node...';
-    actionBtn.disabled      = true;
-    actionBtn.style.opacity = '0.6';
-
-    const SHEETDB_ENDPOINT = 'https://sheetdb.io/api/v1/YOUR_SHEETDB_API_ID';
-
-    fetch(SHEETDB_ENDPOINT, { method: 'POST', body: new FormData(sheetForm) })
-    .then(res => { if (!res.ok) throw new Error('Network registry packet rejection.'); return res.json(); })
-    .then(() => {
-        actionBtn.innerText             = '✔ Registry Insertion Successful';
-        actionBtn.style.backgroundColor = '#34C759';
-        actionBtn.style.color           = '#FFFFFF';
-        actionBtn.style.opacity         = '1';
-        sheetForm.reset();
-        setTimeout(() => {
-            actionBtn.innerText             = 'Deploy Architecture Abstract';
-            actionBtn.style.backgroundColor = '#1D1D1F';
-            actionBtn.disabled              = false;
-        }, 4000);
-    })
-    .catch(err => {
-        console.error(err);
-        actionBtn.innerText             = 'Submission Route Interrupted';
-        actionBtn.style.backgroundColor = '#FF3B30';
-        actionBtn.style.color           = '#FFFFFF';
-        actionBtn.style.opacity         = '1';
-        setTimeout(() => {
-            actionBtn.innerText             = 'Deploy Architecture Abstract';
-            actionBtn.style.backgroundColor = '#1D1D1F';
-            actionBtn.disabled              = false;
-        }, 3000);
+/* 3D TILT */
+document.querySelectorAll('.tilt-card').forEach(c=>{
+    c.addEventListener('mousemove',e=>{
+        const r=c.getBoundingClientRect();
+        c.style.transform=`perspective(700px) rotateY(${(e.clientX-r.left-r.width/2)/(r.width/2)*6}deg) rotateX(${-(e.clientY-r.top-r.height/2)/(r.height/2)*6}deg) translateY(-4px) scale(1.01)`;
     });
+    c.addEventListener('mouseleave',()=>{c.style.transform=''});
+});
+
+/* MAGNETIC BUTTONS */
+document.querySelectorAll('.mag-btn').forEach(b=>{
+    b.addEventListener('mousemove',e=>{
+        const r=b.getBoundingClientRect();
+        b.style.transform=`translate(${(e.clientX-r.left-r.width/2)*.3}px,${(e.clientY-r.top-r.height/2)*.3}px)`;
+    });
+    b.addEventListener('mouseleave',()=>{b.style.transform=''});
+});
+
+/* PARALLAX */
+const ab=document.querySelector('.ambient-bg');
+window.addEventListener('scroll',()=>{ab.style.transform=`translateY(${window.scrollY*.14}px)`},{passive:true});
+
+/* ACTIVE NAV */
+const nls=document.querySelectorAll('nav a[href^="#"]');
+const so=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{if(!e.isIntersecting)return;nls.forEach(a=>a.classList.toggle('nav-active',a.getAttribute('href')==='#'+e.target.id))});
+},{threshold:.45});
+document.querySelectorAll('section[id]').forEach(s=>so.observe(s));
+
+/* VIDEO MODAL */
+const vt=document.getElementById('video-trigger'),vm=document.getElementById('video-modal'),
+      cv=document.getElementById('close-video'),iv=document.getElementById('intro-video'),
+      vc=document.getElementById('video-container');
+const openM=()=>{vm.classList.remove('hidden');setTimeout(()=>{vm.classList.remove('opacity-0');vc.classList.replace('scale-95','scale-100')},10);iv.play()};
+const closeM=()=>{vm.classList.add('opacity-0');vc.classList.replace('scale-100','scale-95');iv.pause();setTimeout(()=>vm.classList.add('hidden'),300)};
+vt.addEventListener('click',openM);cv.addEventListener('click',closeM);
+vm.addEventListener('click',e=>{if(e.target===vm)closeM()});
+
+/* ═══════════════════════════════════
+   EMAIL TOGGLE
+═══════════════════════════════════ */
+const emailToggle=document.getElementById('email-toggle');
+const emailWrapper=document.getElementById('email-field-wrapper');
+const emailInput=document.getElementById('f-email');
+
+emailToggle.addEventListener('change',()=>{
+    if(emailToggle.checked){emailWrapper.classList.add('open');setTimeout(()=>emailInput.focus(),460);}
+    else{emailWrapper.classList.remove('open');emailInput.value='';emailInput.classList.remove('input-error','input-success');}
+});
+emailInput.addEventListener('input',()=>{
+    if(!emailInput.value){emailInput.classList.remove('input-error','input-success');return;}
+    const ok=/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailInput.value);
+    emailInput.classList.toggle('input-success',ok);
+    emailInput.classList.toggle('input-error',!ok);
+});
+
+/* ═══════════════════════════════════
+   FORM SUBMISSION
+═══════════════════════════════════ */
+const form=document.getElementById('sheetdb-form');
+const btn=document.getElementById('action-btn');
+const overlay=document.getElementById('success-overlay');
+const smsg=document.getElementById('success-message');
+const estatus=document.getElementById('email-status');
+const resetBtn=document.getElementById('reset-form-btn');
+
+const SHEETDB='https://sheetdb.io/api/v1/YOUR_SHEETDB_API_ID'; // <- replace with your SheetDB ID
+
+form.addEventListener('submit',async ev=>{
+    ev.preventDefault();
+    const wantsEmail=emailToggle.checked;
+    const emailVal=emailInput.value.trim();
+
+    if(wantsEmail&&!emailVal){emailInput.classList.add('input-error');emailInput.focus();return;}
+    if(wantsEmail&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailVal)){emailInput.classList.add('input-error');emailInput.focus();return;}
+
+    btn.innerText='Deploying to registry…';btn.disabled=true;btn.style.opacity='0.6';
+
+    const name=document.getElementById('f-name').value.trim();
+    const mobile=document.getElementById('f-mobile').value.trim();
+    const projectName=document.getElementById('f-project').value.trim();
+    const description=document.getElementById('f-desc').value.trim();
+
+    const tasks=[
+        fetch(SHEETDB,{method:'POST',body:new FormData(form)}).then(r=>{if(!r.ok)throw new Error();return r.json();})
+    ];
+    if(wantsEmail&&emailVal){
+        tasks.push(
+            fetch('/api/send-email',{
+                method:'POST',
+                headers:{'Content-Type':'application/json'},
+                body:JSON.stringify({name,email:emailVal,mobile,projectName,description})
+            }).then(r=>r.json()).then(d=>{if(d.error)throw new Error(d.error);return d;})
+        );
+    }
+
+    const results=await Promise.allSettled(tasks);
+    const sheetOk=results[0].status==='fulfilled';
+    const mailOk=wantsEmail?(results[1]&&results[1].status==='fulfilled'):null;
+
+    if(!sheetOk){
+        btn.innerText='Submission Route Interrupted';btn.style.background='#FF3B30';btn.style.color='#fff';btn.style.opacity='1';
+        setTimeout(()=>{btn.innerText='Deploy Architecture Abstract';btn.style.background='';btn.style.color='';btn.disabled=false;},3500);
+        return;
+    }
+
+    form.reset();emailWrapper.classList.remove('open');emailToggle.checked=false;
+
+    if(wantsEmail&&mailOk){
+        smsg.textContent=`Abstract logged. Confirmation sent to ${emailVal}.`;
+        estatus.innerHTML=`<svg style="width:14px;height:14px;flex-shrink:0" fill="currentColor" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>&nbsp;Confirmation sent to ${emailVal}`;
+        estatus.className='show sent';
+    } else if(wantsEmail&&!mailOk){
+        smsg.textContent='Abstract logged, but the confirmation email could not be delivered.';
+        estatus.innerHTML=`<svg style="width:14px;height:14px;flex-shrink:0" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>&nbsp;Email could not be delivered`;
+        estatus.className='show failed';
+    } else {
+        smsg.textContent='Your design has been logged in the compilation registry.';
+        estatus.className='';
+    }
+
+    overlay.classList.add('show');setTimeout(()=>overlay.classList.add('visible'),10);
+    btn.innerText='Deploy Architecture Abstract';btn.style.background='';btn.style.color='';btn.style.opacity='1';btn.disabled=false;
+});
+
+resetBtn.addEventListener('click',()=>{
+    overlay.classList.remove('visible');
+    setTimeout(()=>overlay.classList.remove('show'),400);
+    estatus.className='';
 });
 </script>
 </body>
