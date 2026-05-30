@@ -470,5 +470,288 @@ resetBtn.addEventListener('click',()=>{
     setTimeout(()=>overlay.classList.remove('show'),400);
 });
 </script>
+
+    <style>
+  #tp-popup {
+    position: fixed;
+    bottom: 28px;
+    left: 28px;
+    z-index: 99999;
+    background: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.13), 0 4px 16px rgba(0,0,0,0.06);
+    padding: 20px 22px 18px;
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    border: 1px solid rgba(0,0,0,0.06);
+
+    /* start hidden below screen */
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.45s cubic-bezier(0.16,1,0.3,1),
+                transform 0.45s cubic-bezier(0.16,1,0.3,1);
+    pointer-events: none;
+  }
+
+  #tp-popup.tp-show {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: all;
+  }
+
+  #tp-popup.tp-hide {
+    opacity: 0;
+    transform: translateY(16px);
+    pointer-events: none;
+  }
+
+  #tp-close {
+    position: absolute;
+    top: 12px;
+    right: 14px;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: #f0f0f0;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer !important;
+    color: #888;
+    font-size: 13px;
+    line-height: 1;
+    transition: background 0.2s ease, color 0.2s ease;
+    padding: 0;
+  }
+  #tp-close:hover { background: #e0e0e0; color: #333; }
+
+  .tp-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-right: 20px;
+  }
+
+  /* Trustpilot star logo SVG */
+  .tp-logo {
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+  }
+
+  .tp-header-text {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+  }
+  .tp-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 13.5px;
+    font-weight: 700;
+    color: #1D1D1F;
+    line-height: 1.2;
+  }
+  .tp-sub {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11px;
+    color: #86868B;
+    font-weight: 400;
+  }
+
+  .tp-stars {
+    display: flex;
+    gap: 3px;
+  }
+  .tp-stars svg { width: 22px; height: 22px; }
+
+  .tp-msg {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 12.5px;
+    color: #444;
+    line-height: 1.55;
+    margin: 0;
+  }
+
+  .tp-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    background: #00b67a;
+    color: #fff;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 10px 16px;
+    border-radius: 12px;
+    text-decoration: none;
+    cursor: pointer !important;
+    transition: background 0.2s ease, transform 0.2s ease;
+    border: none;
+  }
+  .tp-btn:hover { background: #009e6a; transform: translateY(-1px); }
+  .tp-btn:active { transform: translateY(0); }
+
+  /* countdown ring */
+  .tp-timer {
+    position: absolute;
+    bottom: 18px;
+    right: 18px;
+    width: 28px;
+    height: 28px;
+  }
+  .tp-timer svg { transform: rotate(-90deg); }
+  .tp-timer circle {
+    fill: none;
+    stroke: #00b67a;
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-dasharray: 75.4;       /* 2π × 12 */
+    stroke-dashoffset: 0;
+    transition: stroke-dashoffset 0.1s linear;
+  }
+  .tp-timer-num {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    font-weight: 700;
+    color: #00b67a;
+  }
+
+  @media (max-width: 400px) {
+    #tp-popup { width: calc(100vw - 32px); left: 16px; bottom: 16px; }
+  }
+</style>
+
+<div id="tp-popup" role="dialog" aria-label="Review us on Trustpilot">
+
+  <!-- close button -->
+  <button id="tp-close" aria-label="Dismiss">&#x2715;</button>
+
+  <!-- header: logo + text -->
+  <div class="tp-header">
+    <!-- Trustpilot "T" star logo -->
+    <svg class="tp-logo" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="36" height="36" rx="8" fill="#00b67a"/>
+      <polygon points="18,6 21.5,15.5 31.5,15.5 23.5,21.5 26.5,31 18,25 9.5,31 12.5,21.5 4.5,15.5 14.5,15.5" fill="#ffffff"/>
+    </svg>
+    <div class="tp-header-text">
+      <span class="tp-title">Enjoying BGIABT?</span>
+      <span class="tp-sub">Share your experience</span>
+    </div>
+  </div>
+
+  <!-- 5 green stars -->
+  <div class="tp-stars" aria-label="5 stars">
+    <!-- star × 5 -->
+    <svg viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <rect width="22" height="22" fill="#00b67a"/>
+      <polygon points="11,3 13.2,8.5 19,8.5 14.5,12.2 16.2,18 11,14.5 5.8,18 7.5,12.2 3,8.5 8.8,8.5" fill="white"/>
+    </svg>
+    <svg viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <rect width="22" height="22" fill="#00b67a"/>
+      <polygon points="11,3 13.2,8.5 19,8.5 14.5,12.2 16.2,18 11,14.5 5.8,18 7.5,12.2 3,8.5 8.8,8.5" fill="white"/>
+    </svg>
+    <svg viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <rect width="22" height="22" fill="#00b67a"/>
+      <polygon points="11,3 13.2,8.5 19,8.5 14.5,12.2 16.2,18 11,14.5 5.8,18 7.5,12.2 3,8.5 8.8,8.5" fill="white"/>
+    </svg>
+    <svg viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <rect width="22" height="22" fill="#00b67a"/>
+      <polygon points="11,3 13.2,8.5 19,8.5 14.5,12.2 16.2,18 11,14.5 5.8,18 7.5,12.2 3,8.5 8.8,8.5" fill="white"/>
+    </svg>
+    <svg viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <rect width="22" height="22" fill="#00b67a"/>
+      <polygon points="11,3 13.2,8.5 19,8.5 14.5,12.2 16.2,18 11,14.5 5.8,18 7.5,12.2 3,8.5 8.8,8.5" fill="white"/>
+    </svg>
+  </div>
+
+  <p class="tp-msg">Your feedback helps Bangladeshi innovators get discovered globally. It only takes 30 seconds.</p>
+
+  <!-- CTA button -->
+  <a
+    id="tp-btn"
+    class="tp-btn"
+    href="https://www.trustpilot.com/review/web3blockchain.pro.bd"
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    <svg width="14" height="14" viewBox="0 0 22 22" fill="none"><rect width="22" height="22" rx="4" fill="white" fill-opacity=".25"/><polygon points="11,3 13.2,8.5 19,8.5 14.5,12.2 16.2,18 11,14.5 5.8,18 7.5,12.2 3,8.5 8.8,8.5" fill="white"/></svg>
+    Write a Review
+  </a>
+
+  <!-- countdown ring (bottom-right) -->
+  <div class="tp-timer" id="tp-timer">
+    <svg viewBox="0 0 28 28">
+      <circle cx="14" cy="14" r="12" id="tp-ring"/>
+    </svg>
+    <div class="tp-timer-num" id="tp-timer-num">4</div>
+  </div>
+
+</div>
+
+<script>
+(function () {
+  const DELAY    = 3000;   // ms before popup appears
+  const DURATION = 6000;   // ms popup stays visible before auto-close
+  const CIRCUMFERENCE = 75.4; // 2π × 12
+
+  const popup   = document.getElementById('tp-popup');
+  const closeBtn = document.getElementById('tp-close');
+  const ring    = document.getElementById('tp-ring');
+  const numEl   = document.getElementById('tp-timer-num');
+  const btn     = document.getElementById('tp-btn');
+
+  let countdownId, autoCloseId, dismissed = false;
+
+  function dismiss() {
+    if (dismissed) return;
+    dismissed = true;
+    clearInterval(countdownId);
+    clearTimeout(autoCloseId);
+    popup.classList.remove('tp-show');
+    popup.classList.add('tp-hide');
+  }
+
+  function startCountdown() {
+    let remaining = DURATION;
+    const step = 100;
+
+    countdownId = setInterval(() => {
+      remaining -= step;
+      const fraction = remaining / DURATION;
+      ring.style.strokeDashoffset = CIRCUMFERENCE * (1 - fraction);
+      numEl.textContent = Math.ceil(remaining / 1000);
+      if (remaining <= 0) {
+        clearInterval(countdownId);
+      }
+    }, step);
+
+    autoCloseId = setTimeout(dismiss, DURATION);
+  }
+
+  function show() {
+    popup.classList.add('tp-show');
+    startCountdown();
+  }
+
+  // Clicking "Write a Review" also dismisses after a short delay
+  btn.addEventListener('click', () => {
+    setTimeout(dismiss, 600);
+  });
+
+  closeBtn.addEventListener('click', dismiss);
+
+  // Show after DELAY ms
+  setTimeout(show, DELAY);
+})();
+        </script>
 </body>
 </html>
