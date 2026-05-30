@@ -30,23 +30,6 @@
         .hover-lift:hover{transform:translateY(-4px);box-shadow:0 20px 40px rgba(0,0,0,0.06)}
         .input-glass{background:rgba(255,255,255,0.5);border:1px solid rgba(0,0,0,0.08);transition:all .3s ease}
         .input-glass:focus{border-color:var(--accent-blue);background:rgba(255,255,255,0.9);box-shadow:0 0 0 4px rgba(0,102,204,0.1);outline:none}
-        .input-glass.input-error{border-color:#FF3B30;box-shadow:0 0 0 4px rgba(255,59,48,0.1)}
-        .input-glass.input-success{border-color:#34C759;box-shadow:0 0 0 4px rgba(52,199,89,0.1)}
-        /* Toggle switch */
-        .toggle-switch{position:relative;width:40px;height:22px;flex-shrink:0;display:inline-block}
-        .toggle-switch input{opacity:0;width:0;height:0;position:absolute}
-        .toggle-track{position:absolute;inset:0;background:#E5E5EA;border-radius:999px;transition:background .25s ease;cursor:pointer}
-        .toggle-switch input:checked + .toggle-track{background:#0066CC}
-        .toggle-knob{position:absolute;top:3px;left:3px;width:16px;height:16px;background:white;border-radius:50%;transition:transform .25s cubic-bezier(.16,1,.3,1);box-shadow:0 1px 4px rgba(0,0,0,0.15);pointer-events:none}
-        .toggle-switch input:checked ~ .toggle-knob{transform:translateX(18px)}
-        /* Email field slide */
-        #email-field-wrapper{overflow:hidden;max-height:0;opacity:0;transition:max-height .45s cubic-bezier(.16,1,.3,1),opacity .35s ease}
-        #email-field-wrapper.open{max-height:110px;opacity:1}
-        /* Email status */
-        #email-status{display:none;align-items:center;gap:6px;font-size:11px;font-family:'JetBrains Mono',monospace;padding:6px 14px;border-radius:999px;font-weight:600;margin-top:4px}
-        #email-status.show{display:inline-flex}
-        #email-status.sent{background:rgba(52,199,89,0.12);color:#1A7F3C}
-        #email-status.failed{background:rgba(255,59,48,0.10);color:#C00}
         @keyframes subtleFloat{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-6px) rotate(2deg)}}
         @keyframes pulseGlow{0%,100%{opacity:.4}50%{opacity:1}}
         @keyframes steamRise{0%{transform:translateY(2px);opacity:0}50%{opacity:.6}100%{transform:translateY(-6px);opacity:0}}
@@ -56,7 +39,6 @@
         @keyframes ticker{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
         .animate-ticker{display:flex;width:200%;animation:ticker 20s linear infinite}
         .animate-ticker:hover{animation-play-state:paused}
-        /* Scroll reveal */
         [data-reveal]{opacity:0;will-change:opacity,transform;transition:opacity .8s cubic-bezier(.16,1,.3,1),transform .8s cubic-bezier(.16,1,.3,1)}
         [data-reveal="up"]{transform:translateY(44px)}
         [data-reveal="down"]{transform:translateY(-30px)}
@@ -73,7 +55,6 @@
         [data-stagger].visible>*:nth-child(5){opacity:1;transform:none;transition-delay:.36s}
         [data-stagger].visible>*:nth-child(6){opacity:1;transform:none;transition-delay:.44s}
         [data-stagger].visible>*:nth-child(7){opacity:1;transform:none;transition-delay:.52s}
-        /* Word reveal */
         .word-wrap{display:inline-block;overflow:hidden;vertical-align:bottom;margin-right:.25em}
         .word-inner{display:inline-block;transform:translateY(110%);opacity:0;transition:transform .72s cubic-bezier(.16,1,.3,1),opacity .5s ease}
         .hero-done .word-inner{transform:translateY(0);opacity:1}
@@ -85,7 +66,6 @@
         main{opacity:0;animation:pageFade .5s ease .1s forwards}
         @keyframes pageFade{to{opacity:1}}
         nav a.nav-active{color:#1D1D1F!important;font-weight:600}
-        /* Success overlay */
         #success-overlay{display:none;position:absolute;inset:0;background:rgba(245,245,247,0.96);backdrop-filter:blur(12px);border-radius:32px;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px;gap:16px;opacity:0;transition:opacity .4s ease;z-index:10}
         #success-overlay.show{display:flex}
         #success-overlay.visible{opacity:1}
@@ -258,8 +238,7 @@
                 </svg>
             </div>
             <h3 class="text-2xl font-bold tracking-tight text-[#1D1D1F]">Abstract Received</h3>
-            <p class="text-gray-500 text-sm max-w-xs" id="success-message">Your design has been logged in the compilation registry.</p>
-            <div id="email-status"></div>
+            <p class="text-gray-500 text-sm max-w-xs">Your design has been logged in the compilation registry.</p>
             <button id="reset-form-btn" class="mt-2 text-xs font-mono-tech text-gray-400 hover:text-black transition-colors underline underline-offset-2">Submit another abstract</button>
         </div>
 
@@ -269,57 +248,54 @@
         </div>
 
         <form id="sheetdb-form" class="space-y-5" data-stagger>
+
+            <!-- Name -->
             <div>
                 <label class="block text-xs font-mono-tech text-gray-500 mb-2 uppercase tracking-wide">Innovator Name</label>
-                <input type="text" name="data[Name]" id="f-name" required placeholder="Enter your full name" class="input-glass w-full px-5 py-3.5 rounded-2xl outline-none font-medium placeholder:text-gray-300 text-sm">
+                <input type="text" name="data[Name]" required placeholder="Enter your full name"
+                    class="input-glass w-full px-5 py-3.5 rounded-2xl outline-none font-medium placeholder:text-gray-300 text-sm">
             </div>
+
+            <!-- Mobile -->
             <div>
                 <label class="block text-xs font-mono-tech text-gray-500 mb-2 uppercase tracking-wide">Mobile Number</label>
                 <div class="flex">
                     <div class="flex items-center justify-center px-4 rounded-l-2xl bg-white/40 border border-r-0 border-black/10 font-mono-tech text-sm text-gray-600 select-none backdrop-blur-sm">+880</div>
-                    <input type="tel" name="data[Mobile]" id="f-mobile" required pattern="[0-9]{10}" placeholder="1XXXXXXXXX" class="input-glass w-full px-5 py-3.5 rounded-r-2xl outline-none font-medium placeholder:text-gray-300 text-sm tracking-wider">
+                    <input type="tel" name="data[Mobile]" required pattern="[0-9]{10}" placeholder="1XXXXXXXXX"
+                        class="input-glass w-full px-5 py-3.5 rounded-r-2xl outline-none font-medium placeholder:text-gray-300 text-sm tracking-wider">
                 </div>
-            </div>
-            <div>
-                <label class="block text-xs font-mono-tech text-gray-500 mb-2 uppercase tracking-wide">Project Vector Title</label>
-                <input type="text" name="data[ProjectName]" id="f-project" required placeholder="e.g., OLED Smart Card Engine" class="input-glass w-full px-5 py-3.5 rounded-2xl outline-none font-medium placeholder:text-gray-300 text-sm">
-            </div>
-            <div>
-                <label class="block text-xs font-mono-tech text-gray-500 mb-2 uppercase tracking-wide">System Blueprint &amp; Vision</label>
-                <textarea name="data[Description]" id="f-desc" required rows="4" placeholder="Detail your pipeline blueprint, structural innovation, and resource dependencies..." class="input-glass w-full px-5 py-3.5 rounded-2xl outline-none font-medium placeholder:text-gray-300 text-sm resize-none"></textarea>
             </div>
 
-            <!-- EMAIL TOGGLE CARD -->
-            <div class="bg-white/40 border border-white/60 rounded-2xl p-4 space-y-3">
-                <div class="flex items-center justify-between gap-3">
-                    <div>
-                        <p class="text-sm font-semibold text-[#1D1D1F] flex items-center gap-1.5">
-                            <svg class="w-3.5 h-3.5 text-blue-600 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
-                            Send me a confirmation email
-                        </p>
-                        <p class="text-xs text-gray-400 mt-0.5">Receive a receipt of your abstract submission</p>
-                    </div>
-                    <label class="toggle-switch">
-                        <input type="checkbox" id="email-toggle">
-                        <div class="toggle-track"></div>
-                        <div class="toggle-knob"></div>
-                    </label>
+            <!-- Email -->
+            <div>
+                <label class="block text-xs font-mono-tech text-gray-500 mb-2 uppercase tracking-wide">Email Address</label>
+                <div class="relative">
+                    <svg class="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-300 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                    </svg>
+                    <input type="email" name="data[Email]" required placeholder="you@example.com"
+                        class="input-glass w-full pl-11 pr-5 py-3.5 rounded-2xl outline-none font-medium placeholder:text-gray-300 text-sm">
                 </div>
-                <!-- Slides open on toggle -->
-                <div id="email-field-wrapper">
-                    <label class="block text-xs font-mono-tech text-gray-500 mb-2 uppercase tracking-wide">Email Address</label>
-                    <div class="relative">
-                        <svg class="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-300 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
-                        </svg>
-                        <input type="email" id="f-email" placeholder="you@example.com" class="input-glass w-full pl-11 pr-5 py-3.5 rounded-2xl outline-none font-medium placeholder:text-gray-300 text-sm">
-                    </div>
-                </div>
+            </div>
+
+            <!-- Project -->
+            <div>
+                <label class="block text-xs font-mono-tech text-gray-500 mb-2 uppercase tracking-wide">Project Vector Title</label>
+                <input type="text" name="data[ProjectName]" required placeholder="e.g., OLED Smart Card Engine"
+                    class="input-glass w-full px-5 py-3.5 rounded-2xl outline-none font-medium placeholder:text-gray-300 text-sm">
+            </div>
+
+            <!-- Description -->
+            <div>
+                <label class="block text-xs font-mono-tech text-gray-500 mb-2 uppercase tracking-wide">System Blueprint &amp; Vision</label>
+                <textarea name="data[Description]" required rows="4" placeholder="Detail your pipeline blueprint, structural innovation, and resource dependencies..."
+                    class="input-glass w-full px-5 py-3.5 rounded-2xl outline-none font-medium placeholder:text-gray-300 text-sm resize-none"></textarea>
             </div>
 
             <button type="submit" id="action-btn" class="mag-btn w-full bg-[#1D1D1F] text-white px-6 py-4 rounded-2xl font-medium text-md hover:bg-black active:scale-[0.99] transition-all duration-200 shadow-md">
                 Deploy Architecture Abstract
             </button>
+
         </form>
     </section>
 </main>
@@ -447,97 +423,51 @@ const closeM=()=>{vm.classList.add('opacity-0');vc.classList.replace('scale-100'
 vt.addEventListener('click',openM);cv.addEventListener('click',closeM);
 vm.addEventListener('click',e=>{if(e.target===vm)closeM()});
 
-/* ═══════════════════════════════════
-   EMAIL TOGGLE
-═══════════════════════════════════ */
-const emailToggle=document.getElementById('email-toggle');
-const emailWrapper=document.getElementById('email-field-wrapper');
-const emailInput=document.getElementById('f-email');
-
-emailToggle.addEventListener('change',()=>{
-    if(emailToggle.checked){emailWrapper.classList.add('open');setTimeout(()=>emailInput.focus(),460);}
-    else{emailWrapper.classList.remove('open');emailInput.value='';emailInput.classList.remove('input-error','input-success');}
-});
-emailInput.addEventListener('input',()=>{
-    if(!emailInput.value){emailInput.classList.remove('input-error','input-success');return;}
-    const ok=/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailInput.value);
-    emailInput.classList.toggle('input-success',ok);
-    emailInput.classList.toggle('input-error',!ok);
-});
-
-/* ═══════════════════════════════════
-   FORM SUBMISSION
-═══════════════════════════════════ */
+/* FORM SUBMISSION — SheetDB only */
 const form=document.getElementById('sheetdb-form');
 const btn=document.getElementById('action-btn');
 const overlay=document.getElementById('success-overlay');
-const smsg=document.getElementById('success-message');
-const estatus=document.getElementById('email-status');
 const resetBtn=document.getElementById('reset-form-btn');
 
-const SHEETDB='https://sheetdb.io/api/v1/nc7al5yx676d8'; // <- replace with your SheetDB ID
+const SHEETDB='https://sheetdb.io/api/v1/YOUR_SHEETDB_API_ID'; // <- replace with your SheetDB ID
 
 form.addEventListener('submit',async ev=>{
     ev.preventDefault();
-    const wantsEmail=emailToggle.checked;
-    const emailVal=emailInput.value.trim();
+    btn.innerText='Synchronizing with registry…';
+    btn.disabled=true;
+    btn.style.opacity='0.6';
 
-    if(wantsEmail&&!emailVal){emailInput.classList.add('input-error');emailInput.focus();return;}
-    if(wantsEmail&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailVal)){emailInput.classList.add('input-error');emailInput.focus();return;}
+    try {
+        const res=await fetch(SHEETDB,{method:'POST',body:new FormData(form)});
+        if(!res.ok) throw new Error();
 
-    btn.innerText='Deploying to registry…';btn.disabled=true;btn.style.opacity='0.6';
-
-    const name=document.getElementById('f-name').value.trim();
-    const mobile=document.getElementById('f-mobile').value.trim();
-    const projectName=document.getElementById('f-project').value.trim();
-    const description=document.getElementById('f-desc').value.trim();
-
-    const tasks=[
-        fetch(SHEETDB,{method:'POST',body:new FormData(form)}).then(r=>{if(!r.ok)throw new Error();return r.json();})
-    ];
-    if(wantsEmail&&emailVal){
-        tasks.push(
-            fetch('/api/send-email',{
-                method:'POST',
-                headers:{'Content-Type':'application/json'},
-                body:JSON.stringify({name,email:emailVal,mobile,projectName,description})
-            }).then(r=>r.json()).then(d=>{if(d.error)throw new Error(d.error);return d;})
-        );
-    }
-
-    const results=await Promise.allSettled(tasks);
-    const sheetOk=results[0].status==='fulfilled';
-    const mailOk=wantsEmail?(results[1]&&results[1].status==='fulfilled'):null;
-
-    if(!sheetOk){
-        btn.innerText='Submission Route Interrupted';btn.style.background='#FF3B30';btn.style.color='#fff';btn.style.opacity='1';
-        setTimeout(()=>{btn.innerText='Deploy Architecture Abstract';btn.style.background='';btn.style.color='';btn.disabled=false;},3500);
+        form.reset();
+        overlay.classList.add('show');
+        setTimeout(()=>overlay.classList.add('visible'),10);
+    } catch(e) {
+        btn.innerText='Submission Failed — Try Again';
+        btn.style.background='#FF3B30';
+        btn.style.color='#fff';
+        btn.style.opacity='1';
+        setTimeout(()=>{
+            btn.innerText='Deploy Architecture Abstract';
+            btn.style.background='';
+            btn.style.color='';
+            btn.disabled=false;
+        },3500);
         return;
     }
 
-    form.reset();emailWrapper.classList.remove('open');emailToggle.checked=false;
-
-    if(wantsEmail&&mailOk){
-        smsg.textContent=`Abstract logged. Confirmation sent to ${emailVal}.`;
-        estatus.innerHTML=`<svg style="width:14px;height:14px;flex-shrink:0" fill="currentColor" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>&nbsp;Confirmation sent to ${emailVal}`;
-        estatus.className='show sent';
-    } else if(wantsEmail&&!mailOk){
-        smsg.textContent='Abstract logged, but the confirmation email could not be delivered.';
-        estatus.innerHTML=`<svg style="width:14px;height:14px;flex-shrink:0" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>&nbsp;Email could not be delivered`;
-        estatus.className='show failed';
-    } else {
-        smsg.textContent='Your design has been logged in the compilation registry.';
-        estatus.className='';
-    }
-
-    overlay.classList.add('show');setTimeout(()=>overlay.classList.add('visible'),10);
-    btn.innerText='Deploy Architecture Abstract';btn.style.background='';btn.style.color='';btn.style.opacity='1';btn.disabled=false;
+    btn.innerText='Deploy Architecture Abstract';
+    btn.style.background='';
+    btn.style.color='';
+    btn.style.opacity='1';
+    btn.disabled=false;
 });
 
 resetBtn.addEventListener('click',()=>{
     overlay.classList.remove('visible');
     setTimeout(()=>overlay.classList.remove('show'),400);
-    estatus.className='';
 });
 </script>
 </body>
